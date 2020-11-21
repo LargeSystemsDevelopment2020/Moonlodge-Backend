@@ -19,11 +19,6 @@ stages{
         }
     }
 }
-    tools {
-        jdk "Default"
-        maven "Default"
-    }
-     
     
     options {
         skipStagesAfterUnstable()
