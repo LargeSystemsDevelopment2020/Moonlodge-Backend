@@ -1,6 +1,24 @@
 pipeline {
     agent any
 
+stages{
+    stage ("java-installation") {
+        tools {
+            jdk "Default_JDK"
+        }
+        steps {
+            sh 'java -version'
+        }
+    }
+    stage("maven-installation") {
+        tools {
+            maven "Default"
+        }
+        steps {
+            sh 'mvn -version'
+        }
+    }
+}
     tools {
         jdk "Default"
         maven "Default"
