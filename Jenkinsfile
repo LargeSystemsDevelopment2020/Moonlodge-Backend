@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { dockerfile true }
+        docker { dockerfile true}
     }
     options {
         skipStagesAfterUnstable()
@@ -27,3 +27,4 @@ pipeline {
             }
         }
     }
+}
