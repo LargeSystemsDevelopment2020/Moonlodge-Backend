@@ -1,14 +1,19 @@
 pipeline {
-    agent {
-        dockerfile true 
+    agent any
+
+    tools {
+        maven "3.6.0"
     }
+     
+    
     options {
         skipStagesAfterUnstable()
     }
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn -version'
+                sh "mv clean install"
             }
         }
         stage('Test') {
@@ -25,6 +30,11 @@ pipeline {
             steps {
                 sh './jenkins/scripts/deliver.sh' 
             }
+        }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }
