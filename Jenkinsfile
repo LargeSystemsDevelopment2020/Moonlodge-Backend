@@ -21,5 +21,10 @@ pipeline {
                 }
             }
         }
+        stage('Unit Test') {
+            steps {
+                sh 'mvn clean test -P dev'
+            }
+        }
     }
 }
