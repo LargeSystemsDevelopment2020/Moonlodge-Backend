@@ -40,7 +40,7 @@
     <property name="java.class.path" value="/home/jorg/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/202.7660.26/plugins/maven/lib/maven3/boot/plexus-classworlds-2.6.0.jar:/home/jorg/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/202.7660.26/plugins/maven/lib/maven3/boot/plexus-classworlds.license"/>
     <property name="java.vm.specification.version" value="14"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2020.2.3 clean test -P dev"/>
+    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2020.2.3 clean install"/>
     <property name="java.home" value="/usr/lib/jvm/java-14-openjdk-amd64"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
