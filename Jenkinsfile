@@ -26,5 +26,15 @@ pipeline {
                 sh 'mvn clean test -P dev'
             }
         }
+        stage('Integration Test') {
+            steps {
+                sh 'mvn clean verify -P integration-test'
+            }
+        }
+        stage('Build Jar File') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
     }
 }
