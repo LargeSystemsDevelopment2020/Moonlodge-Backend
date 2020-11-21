@@ -1,8 +1,8 @@
 pipeline {
     agent any
-
-stages{
-    stage ("java-installation") {
+    
+    stages {
+            stage ("java-installation") {
         tools {
             jdk "Default_JDK"
         }
@@ -10,7 +10,7 @@ stages{
             sh 'java -version'
         }
     }
-    stage("maven-installation") {
+           stage("maven-installation") {
         tools {
             maven "Default"
         }
@@ -18,12 +18,6 @@ stages{
             sh 'mvn -version'
         }
     }
-}
-    
-    options {
-        skipStagesAfterUnstable()
-    }
-    stages {
         stage('Build') {
             steps {
                 sh 'mvn -version'
