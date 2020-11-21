@@ -1,24 +1,32 @@
 pipeline {
     agent {
-        docker { dockerfile true}
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    options {
+        skipStagesAfterUnstable()
     }
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                sh 'mvn -B'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('Unit Test') {
+        stage('Test') {
             steps {
-                echo 'Unit Testing..'
-                sh 'mvn clean test -P dev'
+                sh 'mvn test'
             }
             post {
                 always {
-                    junit '/target/surefire-reports/*.xml'
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
+        stage('Deliver') { 
+            steps {
+                sh './jenkins/scripts/deliver.sh' 
+            }
+        }
     }
-}
