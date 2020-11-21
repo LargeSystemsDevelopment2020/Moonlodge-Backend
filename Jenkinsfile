@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image "maven:adoptopenjdk:14-jdk"
+            image "maven:adoptopenjdk:14-jdk-hotspot"
         }
     }
     
