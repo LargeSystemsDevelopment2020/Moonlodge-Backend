@@ -1,32 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image "maven:3.6.0-jdk-14"
+        }
+    }
     
     stages {
-        stage ("java-installation") {
-            tools {
-                jdk "Default_JDK"
-            }
-            steps {
-                sh 'java -version'
-                sh 'javac -version'
-            }
-        }
-        stage("maven-installation") {
-            tools {
-                maven "Default"
-            }
-            steps {
-                sh 'mvn -version'
-            }
-        }
-        stage ('Initialize') {
-            steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                ''' 
-            }
-        }
         stage('Build') {
             steps {
                 sh "mvn clean install"
