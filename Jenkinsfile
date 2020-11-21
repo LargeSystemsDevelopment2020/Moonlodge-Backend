@@ -14,9 +14,6 @@ pipeline {
         tools {
             maven "Default"
         }
-        steps {
-            sh 'mvn -version'
-        }
     }
         stage('Build') {
             steps {
