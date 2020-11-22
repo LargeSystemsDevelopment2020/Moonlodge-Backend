@@ -7,7 +7,8 @@ pipeline {
     }
     parameters {
         choice(name: 'Version', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: false, description: '')
+        booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
+        booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
     }
     // Access build tools for project. Only three tools available: Gradle, Maven and jdk.
     // Is accessable through "global tool configuration" in jenkins. Is used only if locally.
@@ -37,7 +38,7 @@ pipeline {
         stage('Unit Test') {
             when {
                 expression {
-                    params.executeTests
+                    params.executeUnitTests
                 }
             }
             steps {
@@ -51,6 +52,11 @@ pipeline {
             }
         }
         stage('Integration Test') {
+            when {
+                expression {
+                    params.executeIntegrationTests
+                }
+            }
             steps {
                 echo "Running Integration Tests ......."
                 sh 'mvn clean verify -P integration-test'
