@@ -54,8 +54,8 @@
                             <url>https://rasmuslynge.com/manager/text</url>
                             <server>TomcatServer</server>
                             <path>/testmedjorg</path>
-                            <username>$env.SERVER_USR</username>
-                            <password>$env.SERVER_PSW</password>
+                            <username>${env.SERVER_USR}</username>
+                            <password>${env.SERVER_PSW}</password>
                             <update>true</update>
                         </configuration>
                     </plugin>
