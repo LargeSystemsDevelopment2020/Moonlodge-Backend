@@ -1,7 +1,5 @@
 // make the script variable available globally
 def gv
-(a,b,c,d) = para()
-
 
 // to see all env variables in jenkins = http://206.81.29.87:8080/env-vars.html/
 pipeline {
@@ -10,12 +8,12 @@ pipeline {
             image "maven:3.6.3-adoptopenjdk-14"
         }
     }
-    // parameters {
-    //     string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
-    //     choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-    //     booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
-    //     booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
-    // }
+    parameters {
+        string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
+        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+        booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
+        booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
+    }
     // Access build tools for project. Only three tools available: Gradle, Maven and jdk.
     // Is accessable through "global tool configuration" in jenkins. Is used only if locally.
     // tools {
@@ -53,8 +51,7 @@ pipeline {
         stage('unit test') {
             when {
                 expression {
-                    //params.executeUnitTests
-                    a
+                    params.executeUnitTests                 
                 }
             }
             steps {
