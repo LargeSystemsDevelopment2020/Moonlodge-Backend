@@ -37,7 +37,7 @@ pipeline {
         stage('Unit Test') {
             when {
                 expression {
-                    params.executeTests == true
+                    params.executeTests
                 }
             }
             steps {
@@ -59,6 +59,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'mvn compile'
+                echo "deploying version ${params.VERSION}"
                 // withCredentials([
                 //     usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD )
                 // ]) {
