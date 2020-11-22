@@ -67,25 +67,25 @@ pipeline {
         //         }
         //     }
         // }
-        // stage('integration test') {
-        //     when {
-        //         expression {
-        //             params.executeIntegrationTests
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             gv.integrationTest()
-        //         }
-        //         sh 'mvn clean verify -P integration-test'
-        //     }
-        // }
+        stage('integration test') {
+            when {
+                expression {
+                    params.executeIntegrationTests
+                }
+            }
+            steps {
+                script {
+                    gv.integrationTest()
+                }
+                sh 'mvn clean verify -P integration-test'
+            }
+        }
         stage('deploy') {
             steps {
                 script {
                     gv.deployProject()
                 }
-                "sh mvn tomcat7:deploy -P deployremote"
+                sh 'mvn tomcat7:deploy -P deployremote'
                 sh "echo 'username: $SERVER_USR' "
                 sh "echo 'password: $SERVER_PSW' "
 
