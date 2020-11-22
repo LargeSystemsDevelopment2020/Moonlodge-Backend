@@ -22,7 +22,7 @@ pipeline {
     // creating our own env variables
     environment {
         NEW_VERSION = '1.0.3'
-        SERVER_CREDENTIALS = credentials('tomcat')
+        //SERVER_CREDENTIALS = credentials('tomcat')
         // server-credential is the id you gave when creating a jenkins credential
         //SERVER_CREDENTIALS = credentials('server-credentials')
     }
