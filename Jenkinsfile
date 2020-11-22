@@ -88,6 +88,8 @@ pipeline {
                 }
                 sh 'mvn compile'
                 sh "echo 'username: $SERVER_USR' "
+                sh "echo 'password: $SERVER_PWD' "
+                sh "echo 'username: $SERVER_HALLO' "
 
                 // withCredentials([
                 //     usernamePassword(credentialsId: 'tomcat', usernameVariable: USER, passwordVariable: PWD )
