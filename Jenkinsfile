@@ -7,12 +7,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Hallo"
+                echo "Building project ......."
                 sh "mvn clean install"
             }
         }
         stage('Unit Test') {
+            when {
+                expression {
+                    // Jenkins env file
+                    BRANCH_NAME == 'dev'
+                }
+            }
             steps {
+                echo "Running Unit Tests ......."
                 sh 'mvn clean test -P dev'
             }
             post {
@@ -32,4 +39,21 @@ pipeline {
             }
         }
     }
+    // build Status or Build Status Changes
+    // executes some logic AFTER all stages are executed
+    // post {
+    //     // will be executed no matter what
+    //     always {
+
+    //     }
+    //     // only relevant if buil fails
+    //     failure {
+
+    //     }
+    //     // only relevant if build succeded
+    //     success {
+
+    //     }
+
+    // }
 }
