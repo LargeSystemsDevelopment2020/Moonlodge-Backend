@@ -24,7 +24,6 @@ pipeline {
         NEW_VERSION = '1.0.3'
         //SERVER_CREDENTIALS = credentials('tomcat')
         // server-credential is the id you gave when creating a jenkins credential
-        //SERVER_CREDENTIALS = credentials('server-credentials')
         SERVER = credentials('tomcat')
     }
     stages {
@@ -86,16 +85,10 @@ pipeline {
                 script {
                     gv.deployProject()
                 }
-                sh 'mvn compile'
+                "sh mvn tomcat7:deploy -P deployremote"
                 sh "echo 'username: $SERVER_USR' "
                 sh "echo 'password: $SERVER_PSW' "
-                sh "echo 'username: $SERVER_HALLO' "
 
-                // withCredentials([
-                //     usernamePassword(credentialsId: 'tomcat', usernameVariable: USER, passwordVariable: PWD )
-                // ]) {
-                //      sh 'echo some script $USER $PWD'
-                // }
             }
         }
     }
