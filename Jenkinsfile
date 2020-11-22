@@ -22,6 +22,7 @@ pipeline {
     // creating our own env variables
     environment {
         NEW_VERSION = '1.0.3'
+        SERVER_CREDENTIALS = credentials('tomcat')
         // server-credential is the id you gave when creating a jenkins credential
         //SERVER_CREDENTIALS = credentials('server-credentials')
     }
@@ -48,37 +49,37 @@ pipeline {
                 sh "mvn clean install"
             }
         }
-        stage('unit test') {
-            when {
-                expression {
-                    params.executeUnitTests                 
-                }
-            }
-            steps {
-                script {
-                    gv.unitTest()
-                }
-                sh 'mvn clean test -P dev'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('integration test') {
-            when {
-                expression {
-                    params.executeIntegrationTests
-                }
-            }
-            steps {
-                script {
-                    gv.integrationTest()
-                }
-                sh 'mvn clean verify -P integration-test'
-            }
-        }
+        // stage('unit test') {
+        //     when {
+        //         expression {
+        //             params.executeUnitTests                 
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             gv.unitTest()
+        //         }
+        //         sh 'mvn clean test -P dev'
+        //     }
+        //     post {
+        //         always {
+        //             junit 'target/surefire-reports/*.xml'
+        //         }
+        //     }
+        // }
+        // stage('integration test') {
+        //     when {
+        //         expression {
+        //             params.executeIntegrationTests
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             gv.integrationTest()
+        //         }
+        //         sh 'mvn clean verify -P integration-test'
+        //     }
+        // }
         stage('deploy') {
             steps {
                 script {
@@ -86,7 +87,7 @@ pipeline {
                 }
                 sh 'mvn compile'
                 withCredentials([
-                    usernamePassword(credentials: 'tomcat', usernameVariable: USER, passwordVariable: PWD )
+                    usernamePassword(credentialsId: 'tomcat', usernameVariable: USER, passwordVariable: PWD )
                 ]) {
                      sh 'echo some script $USER $PWD'
                 }
