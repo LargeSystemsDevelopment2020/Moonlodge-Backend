@@ -6,6 +6,12 @@ pipeline {
     } 
     stages {
         stage('Build') {
+            when {
+                expression {
+                    // Jenkins env file
+                    BRANCH_NAME == 'dev' || CODE_CHANGES == true
+                }
+            }
             steps {
                 echo "Building project ......."
                 sh "mvn clean install"
@@ -15,7 +21,7 @@ pipeline {
             when {
                 expression {
                     // Jenkins env file
-                    BRANCH_NAME == 'dev'
+                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'main'
                 }
             }
             steps {
