@@ -6,7 +6,7 @@ pipeline {
         }
     }
     parameters {
-        string(name: 'SOMETHING', defaultValue: '', description: 'version to deploy on prod')
+        string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
         booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
@@ -31,7 +31,10 @@ pipeline {
             //     }
             // }
             steps {
+                // jenkins env
                 echo "Building project NR:${BUILD_DISPLAY_NAME}......."
+                // env created in this file
+                echo "${BUILD_REASON}"
                 echo "building version ${NEW_VERSION}"
                 sh "mvn clean install"
             }
