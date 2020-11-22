@@ -88,7 +88,7 @@ pipeline {
                 withCredentials([
                     usernamePassword(credentials: 'tomcat', usernameVariable: USER, passwordVariable: PWD )
                 ]) {
-                     echo "some script ${USER} ${PWD}"
+                     echo "some script $USER $PWD"
                 }
             }
         }
