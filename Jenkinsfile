@@ -30,6 +30,7 @@ pipeline {
         }
         stage('Integration Test') {
             steps {
+                echo "Running Integration Tests ......."
                 sh 'mvn clean verify -P integration-test'
             }
         }
