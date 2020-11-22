@@ -7,7 +7,7 @@ pipeline {
     }
     parameters {
         choice(name: 'Version', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+        booleanParam(name: 'executeTests', defaultValue: false, description: '')
     }
     // Access build tools for project. Only three tools available: Gradle, Maven and jdk.
     // Is accessable through "global tool configuration" in jenkins. Is used only if locally.
