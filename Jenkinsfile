@@ -1,10 +1,14 @@
-// http://206.81.29.87:8080/env-vars.html/
+// to see all env variables in jenkins = http://206.81.29.87:8080/env-vars.html/
 pipeline {
     agent {
         docker {
             image "maven:3.6.3-adoptopenjdk-14"
         }
-    } 
+    }
+    // creating our own env variables
+    environment {
+        NEW_VERSION = '1.0.3'
+    }
     stages {
         stage('Build') {
             // when {
@@ -14,8 +18,8 @@ pipeline {
             //     }
             // }
             steps {
-                echo "Building project ......."
-                echo BUILD_DISPLAY_NAME
+                echo "Building project NR:${BUILD_DISPLAY_NAME}......."
+                echo "building version ${NEW_VERSION}"
                 sh "mvn clean install"
             }
         }
