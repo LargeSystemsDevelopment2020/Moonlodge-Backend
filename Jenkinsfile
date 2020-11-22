@@ -85,11 +85,11 @@ pipeline {
                     gv.deployProject()
                 }
                 sh 'mvn compile'
-                // withCredentials([
-                //     usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD )
-                // ]) {
-                //     sh "some script ${USER} ${PWD}"
-                // }
+                withCredentials([
+                    usernamePassword(credentials: 'tomcat', usernameVariable: USER, passwordVariable: PWD )
+                ]) {
+                    sh "some script ${USER} ${PWD}"
+                }
             }
         }
     }
