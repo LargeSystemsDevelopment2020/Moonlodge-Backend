@@ -5,9 +5,20 @@ pipeline {
             image "maven:3.6.3-adoptopenjdk-14"
         }
     }
+    parameters {
+        choice(name: 'Version', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+    }
+    // Access build tools for project. Only three tools available: Gradle, Maven and jdk.
+    // Is accessable through "global tool configuration" in jenkins. Is used only if locally.
+    // tools {
+
+    // }
     // creating our own env variables
     environment {
         NEW_VERSION = '1.0.3'
+        // server-credential is the id you gave when creating a jenkins credential
+        //SERVER_CREDENTIALS = credentials('server-credentials')
     }
     stages {
         stage('Build') {
@@ -24,12 +35,11 @@ pipeline {
             }
         }
         stage('Unit Test') {
-            // when {
-            //     expression {
-            //         // Jenkins env file
-            //         BRANCH_NAME == 'dev' || BRANCH_NAME == 'main'
-            //     }
-            // }
+            when {
+                expression {
+                    params.executeTests == true
+                }
+            }
             steps {
                 echo "Running Unit Tests ......."
                 sh 'mvn clean test -P dev'
@@ -46,9 +56,14 @@ pipeline {
                 sh 'mvn clean verify -P integration-test'
             }
         }
-        stage('Build Jar File') {
+        stage('Deploy') {
             steps {
                 sh 'mvn compile'
+                // withCredentials([
+                //     usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD )
+                // ]) {
+                //     sh "some script ${USER} ${PWD}"
+                // }
             }
         }
     }
