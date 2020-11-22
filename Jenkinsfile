@@ -6,7 +6,8 @@ pipeline {
         }
     }
     parameters {
-        choice(name: 'Version', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+        string(name: 'SOMETHING', defaultValue: '', description: 'version to deploy on prod')
+        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
         booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
     }
