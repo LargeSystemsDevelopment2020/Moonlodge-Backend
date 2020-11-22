@@ -88,7 +88,7 @@ pipeline {
                 }
                 sh 'mvn compile'
                 sh "echo 'username: $SERVER_USR' "
-                sh "echo 'password: $SERVER_PWD' "
+                sh "echo 'password: $SERVER_PSW' "
                 sh "echo 'username: $SERVER_HALLO' "
 
                 // withCredentials([
