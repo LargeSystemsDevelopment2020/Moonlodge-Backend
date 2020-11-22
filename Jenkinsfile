@@ -1,3 +1,4 @@
+// http://206.81.29.87:8080/env-vars.html/
 pipeline {
     agent {
         docker {
@@ -6,24 +7,25 @@ pipeline {
     } 
     stages {
         stage('Build') {
-            when {
-                expression {
-                    // Jenkins env file
-                    BRANCH_NAME == 'dev' || CODE_CHANGES == true
-                }
-            }
+            // when {
+            //     expression {
+            //         // Jenkins env file
+            //         BRANCH_NAME == 'dev' || CODE_CHANGES == true
+            //     }
+            // }
             steps {
                 echo "Building project ......."
+                echo BUILD_DISPLAY_NAME
                 sh "mvn clean install"
             }
         }
         stage('Unit Test') {
-            when {
-                expression {
-                    // Jenkins env file
-                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'main'
-                }
-            }
+            // when {
+            //     expression {
+            //         // Jenkins env file
+            //         BRANCH_NAME == 'dev' || BRANCH_NAME == 'main'
+            //     }
+            // }
             steps {
                 echo "Running Unit Tests ......."
                 sh 'mvn clean test -P dev'
