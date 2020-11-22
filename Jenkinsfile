@@ -1,3 +1,7 @@
+// make the script variable available globally
+def gv
+
+
 // to see all env variables in jenkins = http://206.81.29.87:8080/env-vars.html/
 pipeline {
     agent {
@@ -23,7 +27,14 @@ pipeline {
         //SERVER_CREDENTIALS = credentials('server-credentials')
     }
     stages {
-        stage('Build') {
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
+        stage('build') {
             // when {
             //     expression {
             //         // Jenkins env file
@@ -31,22 +42,22 @@ pipeline {
             //     }
             // }
             steps {
-                // jenkins env
-                echo "Building project NR:${BUILD_DISPLAY_NAME}......."
-                // env created in this file
-                echo "${BUILD_REASON}"
-                echo "building version ${NEW_VERSION}"
+                script {
+                    gv.buildProject()
+                }
                 sh "mvn clean install"
             }
         }
-        stage('Unit Test') {
+        stage('unit test') {
             when {
                 expression {
                     params.executeUnitTests
                 }
             }
             steps {
-                echo "Running Unit Tests ......."
+                script {
+                    gv.unitTest()
+                }
                 sh 'mvn clean test -P dev'
             }
             post {
@@ -55,21 +66,25 @@ pipeline {
                 }
             }
         }
-        stage('Integration Test') {
+        stage('integration test') {
             when {
                 expression {
                     params.executeIntegrationTests
                 }
             }
             steps {
-                echo "Running Integration Tests ......."
+                script {
+                    gv.integrationTest()
+                }
                 sh 'mvn clean verify -P integration-test'
             }
         }
-        stage('Deploy') {
+        stage('deploy') {
             steps {
+                script {
+                    gv.deployProject()
+                }
                 sh 'mvn compile'
-                echo "deploying version ${params.VERSION}"
                 // withCredentials([
                 //     usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD )
                 // ]) {
