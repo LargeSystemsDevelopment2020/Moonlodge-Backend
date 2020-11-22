@@ -25,6 +25,7 @@ pipeline {
         //SERVER_CREDENTIALS = credentials('tomcat')
         // server-credential is the id you gave when creating a jenkins credential
         //SERVER_CREDENTIALS = credentials('server-credentials')
+        SERVER = credentials('tomcat')
     }
     stages {
         stage("init") {
@@ -35,20 +36,20 @@ pipeline {
                 }
             }
         }
-        stage('build') {
-            // when {
-            //     expression {
-            //         // Jenkins env file
-            //         BRANCH_NAME == 'dev' || CODE_CHANGES == true
-            //     }
-            // }
-            steps {
-                script {
-                    gv.buildProject()
-                }
-                sh "mvn clean install"
-            }
-        }
+        // stage('build') {
+        //     // when {
+        //     //     expression {
+        //     //         // Jenkins env file
+        //     //         BRANCH_NAME == 'dev' || CODE_CHANGES == true
+        //     //     }
+        //     // }
+        //     steps {
+        //         script {
+        //             gv.buildProject()
+        //         }
+        //         sh "mvn clean install"
+        //     }
+        // }
         // stage('unit test') {
         //     when {
         //         expression {
@@ -86,11 +87,13 @@ pipeline {
                     gv.deployProject()
                 }
                 sh 'mvn compile'
-                withCredentials([
-                    usernamePassword(credentialsId: 'tomcat', usernameVariable: USER, passwordVariable: PWD )
-                ]) {
-                     sh 'echo some script $USER $PWD'
-                }
+                sh "echo 'username: $SERVER_USR' "
+
+                // withCredentials([
+                //     usernamePassword(credentialsId: 'tomcat', usernameVariable: USER, passwordVariable: PWD )
+                // ]) {
+                //      sh 'echo some script $USER $PWD'
+                // }
             }
         }
     }
