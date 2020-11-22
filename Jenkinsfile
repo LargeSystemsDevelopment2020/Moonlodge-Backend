@@ -7,12 +7,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh echo "mvn clean install"
                 sh "mvn clean install"
             }
         }
-        stage('Test') {
+        stage('Unit Test') {
             steps {
-                sh 'mvn test'
+                sh echo "mvn clean test -P dev"
+                sh 'mvn clean test -P dev'
             }
             post {
                 always {
@@ -20,19 +22,20 @@ pipeline {
                 }
             }
         }
-        stage('Unit Test') {
-            steps {
-                sh 'mvn clean test -P dev'
-            }
-        }
         stage('Integration Test') {
             steps {
+                sh echo "mvn clean verify -P integration-test"
                 sh 'mvn clean verify -P integration-test'
             }
         }
         stage('Build Jar File') {
             steps {
                 sh 'mvn compile'
+            }
+            post {
+                always {
+                    '/target/jar-folder/moonlodge.jar'
+                }
             }
         }
     }
