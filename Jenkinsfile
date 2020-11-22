@@ -2,10 +2,8 @@ pipeline {
     agent {
         docker {
             image "maven:3.6.3-adoptopenjdk-14"
-            la
         }
-    }
-    
+    } 
     stages {
         stage('Build') {
             steps {
