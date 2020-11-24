@@ -2,6 +2,11 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="lsd-repository" />
+      <option name="name" value="Internet mirror for rasmuslynge.com" />
+      <option name="url" value="http://rasmuslynge.com:8081/repository/internal/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />

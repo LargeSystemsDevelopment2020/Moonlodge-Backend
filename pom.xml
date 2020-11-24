@@ -7,7 +7,7 @@
     <groupId>dk.lsd</groupId>
     <artifactId>moonlodge_backend</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -178,7 +178,20 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>lsd-repository</id>
+            <name>Internet mirror for rasmuslynge.com</name>
+            <url>http://rasmuslynge.com:8081/repository/internal/</url>
+        </repository>
+    </repositories>
     <dependencies>
+        <dependency>
+            <groupId>dk.cphbusiness.lsd.groupe.moonloodge</groupId>
+            <artifactId>MoonLodgeContract</artifactId>
+            <version>1.0.2</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
