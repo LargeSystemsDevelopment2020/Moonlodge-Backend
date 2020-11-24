@@ -86,7 +86,7 @@ pipeline {
                     gv.deployProject()
                 }
                 //sh 'mvn tomcat7:deploy -P deployremote'
-                sh 'scp target/*.jar root@206.81.29.87:/home'
+                scp 'target/*.jar root@206.81.29.87:/home'
             }
         }
     }
