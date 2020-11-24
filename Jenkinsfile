@@ -4,7 +4,7 @@ def gv
 pipeline {
     agent {
         docker {
-            image "maven:3.6-adoptopenjdk-14"
+            image "maven:3.6.3-adoptopenjdk-14"
         }
     }
     parameters {
@@ -83,9 +83,11 @@ pipeline {
                 script {
                     gv.deployProject()
                 }
-                sh 'mvn tomcat7:deploy -P deployremote'
-                sh "echo 'username: $SERVER_USR' "
-                sh "echo 'password: $SERVER_PSW' "
+                   sh mvn deploy
+                   sh 'scp /target/*.jar root@206.81.29.87:'
+//                 sh 'mvn tomcat7:deploy -P deployremote'
+//                 sh "echo 'username: $SERVER_USR' "
+//                 sh "echo 'password: $SERVER_PSW' "
             }
         }
     }
