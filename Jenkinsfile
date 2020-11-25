@@ -83,6 +83,7 @@ pipeline {
                 script {
                     gv.deployProject()
                 }
+                   sh 'chmod +x deliver.sh'
                    sh './deliver.sh'
                    sh 'scp /target/*.jar root@206.81.29.87:'
 //                 sh 'mvn tomcat7:deploy -P deployremote'
