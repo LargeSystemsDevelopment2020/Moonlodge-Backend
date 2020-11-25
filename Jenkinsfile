@@ -85,7 +85,7 @@ pipeline {
                 }
                    sh 'chmod +x deliver.sh'
                    sh './deliver.sh'
-                   sh 'scp target/${NAME}-${VERSION}.jar root@206.81.29.87:/'
+                
 //                 sh 'mvn tomcat7:deploy -P deployremote'
 //                 sh "echo 'username: $SERVER_USR' "
 //                 sh "echo 'password: $SERVER_PSW' "
