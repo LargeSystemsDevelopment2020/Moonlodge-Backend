@@ -40,7 +40,7 @@
                 <skip.unit.tests>true</skip.unit.tests>
             </properties>
         </profile>
-
+    </profiles>
     <build>
         <plugins>
             <plugin>
