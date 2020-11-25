@@ -31,9 +31,8 @@ set -x
 
 # java -jar target/${NAME}-${VERSION}.jar
 
-touch text.txt 
-echo 'asdfsd' > text.txt
-scp ssh -rv text.txt root@206.81.29.87:/
+# touch text.txt 
+# echo 'asdfsd' > text.txt
+# scp ssh -rv text.txt root@206.81.29.87:/
 
-#scp target/${NAME}-${VERSION}.jar root@206.81.29.87:/
-set +x
+su scp ssh target/${NAME}-${VERSION}.jar root@206.81.29.87:/
