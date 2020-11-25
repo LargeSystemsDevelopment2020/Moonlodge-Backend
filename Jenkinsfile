@@ -83,7 +83,7 @@ pipeline {
                 script {
                     gv.deployProject()
                 }
-                   sh 'chmod +x deliver.sh'
+                   sh 'chmod +x ./deliver.sh'
                    sh './deliver.sh'
                 
 //                 sh 'mvn tomcat7:deploy -P deployremote'
