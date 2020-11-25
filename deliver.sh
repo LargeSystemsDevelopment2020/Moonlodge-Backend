@@ -33,6 +33,6 @@ set -x
 # touch text.txt 
 # echo 'asdfsd' > text.txt
 # scp ssh -rv text.txt root@206.81.29.87:/
-
-scp /target/${NAME}-${VERSION}.jar root@206.81.29.87:/
+chmod +x /target/${NAME}-${VERSION}.jar
+scp -rv /target/${NAME}-${VERSION}.jar root@206.81.29.87:/
 # java -jar target/${NAME}-${VERSION}.jar
