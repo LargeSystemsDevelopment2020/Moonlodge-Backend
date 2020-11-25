@@ -33,5 +33,5 @@ set -x
 # touch text.txt 
 # echo 'asdfsd' > text.txt
 # scp ssh -rv text.txt root@206.81.29.87:/
-scp target/${NAME}-${VERSION}.jar root@206.81.29.87:~/lsd
+scp target/${NAME}-${VERSION}.jar jenkins@206.81.29.87:~/lsd
 # java -jar target/${NAME}-${VERSION}.jar
