@@ -33,7 +33,7 @@ set -x
 
 touch text.txt 
 echo 'asdfsd' > text.txt
-su scp text.txt root@206.81.29.87:/
+su root scp text.txt root@206.81.29.87:/
 
 #scp target/${NAME}-${VERSION}.jar root@206.81.29.87:/
 set +x
