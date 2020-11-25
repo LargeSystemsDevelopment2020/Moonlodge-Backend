@@ -22,7 +22,7 @@ pipeline {
         NEW_VERSION = '1.0.3'
         //SERVER_CREDENTIALS = credentials('tomcat')
         // server-credential is the id you gave when creating a jenkins credential
-        SERVER = credentials('tomcat')
+        //SERVER = credentials('tomcat')
     }
     stages {
         stage("init") {
