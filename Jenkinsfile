@@ -2,11 +2,13 @@
 def gv
 // to see all env variables in jenkins = http://206.81.29.87:8080/env-vars.html/
 pipeline {
-    agent {
-        docker {
-            image "maven:3.6.3-adoptopenjdk-14"
-        }
-    }
+    agent any
+    //{
+        // docker {
+        //     image "maven:3.6.3-adoptopenjdk-14"
+        // }
+        
+   // }
     parameters {
         string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
