@@ -29,8 +29,13 @@ echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 # set -x
 # java -jar target/${NAME}-${VERSION}.jar
-touch text.txt 
-echo 'asdfsd' > text.txt
 
-scp text.txt root@206.81.29.87:/
-#scp target/${NAME}-${VERSION}.jar root@206.81.29.87:/
+
+#touch text.txt 
+#echo 'asdfsd' > text.txt
+
+set -x
+#scp text.txt root@206.81.29.87:/
+
+scp target/${NAME}-${VERSION}.jar root@206.81.29.87:/
+set +x
