@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #echo 'plz deliver'
 # for permissions for github: git update-index --chmod=+x check_services.sh
@@ -33,9 +33,7 @@ set -x
 
 touch text.txt 
 echo 'asdfsd' > text.txt
-#scp text.txt root@206.81.29.87:/
+scp text.txt root@206.81.29.87:/
 
-rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress test.txt 206.81.29.87:/root/
-
-scp target/${NAME}-${VERSION}.jar root@206.81.29.87:/
+#scp target/${NAME}-${VERSION}.jar root@206.81.29.87:/
 set +x
