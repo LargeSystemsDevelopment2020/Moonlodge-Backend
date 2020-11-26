@@ -61,9 +61,7 @@ pipeline {
         }
         stage('deploy') {
             when {
-                expression {
-                    BRANCH_NAME == "main"
-                }
+                branch 'main'
             }
             steps {
                 script {
