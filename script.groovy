@@ -13,7 +13,7 @@ def unitTest() {
 
 def integrationTest() {
     echo "Running Integration Tests ......."
-    sh 'mvn clean verify -P integration-test'
+    sh "mvn clean verify -P integration-test"
 }
 
 def deployProject() {
