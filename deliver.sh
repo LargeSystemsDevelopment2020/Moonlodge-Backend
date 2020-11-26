@@ -32,4 +32,4 @@ set -x
 # hgjyfkjfj
 # scp ssh -rv text.txt root@206.81.29.87:/
 cp target/${NAME}-${VERSION}.jar /lsd/
-# java -jar target/${NAME}-${VERSION}.jar
+java -jar target/${NAME}-${VERSION}.jar
