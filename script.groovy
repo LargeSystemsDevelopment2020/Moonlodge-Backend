@@ -8,7 +8,7 @@ def buildProject() {
 
 def unitTest() {
     echo "Running Unit Tests ......."
-    sh 'mvn clean test -P dev'
+    sh mvn clean test -P dev
 }
 
 def integrationTest() {
