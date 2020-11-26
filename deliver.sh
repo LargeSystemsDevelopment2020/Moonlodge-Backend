@@ -29,9 +29,7 @@ echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
 
-
-# touch text.txt 
-# echo 'asdfsd' > text.txt
+# hgjyfkjfj
 # scp ssh -rv text.txt root@206.81.29.87:/
 cp target/${NAME}-${VERSION}.jar /lsd/
 # java -jar target/${NAME}-${VERSION}.jar
