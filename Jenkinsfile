@@ -3,29 +3,14 @@ def gv
 // to see all env variables in jenkins = http://206.81.29.87:8080/env-vars.html/
 pipeline {
     agent any
-    //{
-        // docker {
-        //     image "maven:3.6.3-adoptopenjdk-14"
-        // }
-        
-   // }
+
     parameters {
-        string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
-        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+        // string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
+        // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
         booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
     }
-    // Access build tools for project. Only three tools available: Gradle, Maven and jdk.
-    // Is accessable through "global tool configuration" in jenkins. Is used only if locally.
-    // tools {
-    // }
-    // creating our own env variables
-    environment {
-        NEW_VERSION = '1.0.3'
-        //SERVER_CREDENTIALS = credentials('tomcat')
-        // server-credential is the id you gave when creating a jenkins credential
-        //SERVER = credentials('tomcat')
-    }
+
     stages {
         stage("init") {
             steps {
@@ -36,17 +21,11 @@ pipeline {
             }
         }
         stage('build') {
-            // when {
-            //     expression {
-            //         // Jenkins env file
-            //         BRANCH_NAME == 'dev' || CODE_CHANGES == true
-            //     }
-            // }
             steps {
                 script {
                     gv.buildProject()
                 }
-                sh "mvn clean install"
+                // sh "mvn clean install"
             }
         }
         stage('unit test') {
@@ -59,7 +38,7 @@ pipeline {
                 script {
                     gv.unitTest()
                 }
-                sh 'mvn clean test -P dev'
+                // sh 'mvn clean test -P dev'
             }
             post {
                 always {
@@ -77,22 +56,18 @@ pipeline {
                 script {
                     gv.integrationTest()
                 }
-                sh 'mvn clean verify -P integration-test'
+                // sh 'mvn clean verify -P integration-test'
             }
         }
-        stage('deploy') {
-            steps {
-                script {
-                    gv.deployProject()
-                }
-                   sh 'chmod +x ./deliver.sh'
-                   sh './deliver.sh'
-                
-//                 sh 'mvn tomcat7:deploy -P deployremote'
-//                 sh "echo 'username: $SERVER_USR' "
-//                 sh "echo 'password: $SERVER_PSW' "
-            }
-        }
+        // stage('deploy') {
+        //     steps {
+        //         script {
+        //             gv.deployProject()
+        //         }
+        //         //    sh 'chmod +x ./deliver.sh'
+        //         //    sh './deliver.sh'
+        //     }
+        // }
     }
     // build Status or Build Status Changes
     // executes some logic AFTER all stages are executed

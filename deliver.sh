@@ -29,8 +29,7 @@ echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
 
-# hgjyfkjfj
-# scp ssh -rv text.txt root@206.81.29.87:/
+# Copying the file from jenkins to droplet
+echo 'Jar File Name: ' ${NAME}-${VERSION}
 cp target/${NAME}-${VERSION}.jar /lsd/
-# echo java -cp /lsd/${NAME}-${VERSION}.jar
 /usr/lib/jvm/java-11-openjdk-amd64/bin/java -jar /lsd/${NAME}-${VERSION}.jar

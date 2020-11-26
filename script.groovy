@@ -1,22 +1,26 @@
 def buildProject() {
     echo 'building the apllication...'
-     // jenkins env
+    // jenkins env files
     echo "Building project NR:${BUILD_DISPLAY_NAME}......."
-    // env created in this file
-    echo "${BUILD_REASON}"
     echo "building version ${NEW_VERSION}"
+    sh "mvn clean install"
 }
 
 def unitTest() {
     echo "Running Unit Tests ......."
+    sh 'mvn clean test -P dev'
 }
 
 def integrationTest() {
     echo "Running Integration Tests ......."
+    sh 'mvn clean verify -P integration-test'
 }
 
 def deployProject() {
     echo "deploying version ${params.VERSION}"
+    sh 'chmod +x ./deliver.sh'
+    sh './deliver.sh'
 }
+
 
 return this 
