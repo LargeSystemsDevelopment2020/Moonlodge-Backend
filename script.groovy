@@ -2,7 +2,7 @@ private void buildProject() {
     echo 'building the apllication...'
     // jenkins env files
     echo "Building project NR:${BUILD_DISPLAY_NAME}......."
-    echo "building version ${NEW_VERSION}"
+    //echo "building version ${NEW_VERSION}"
     sh "mvn clean install"
 }
 
