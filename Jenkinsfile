@@ -69,5 +69,17 @@ pipeline {
         //     }
         // }
     }
-
+    // build Status or Build Status Changes
+    // executes some logic AFTER all stages are executed
+    // post {
+    //     // will be executed no matter what
+    //     always {
+    //     }
+    //     // only relevant if buil fails
+    //     failure {
+    //     }
+    //     // only relevant if build succeded
+    //     success {
+    //     }
+    // }
 }
