@@ -3,12 +3,12 @@ private void buildProject() {
     // jenkins env files
     echo "Building project NR:${BUILD_DISPLAY_NAME}......."
     //echo "building version ${NEW_VERSION}"
-    sh "mvn clean install"
+    sh 'mvn clean install'
 }
 
 private void unitTest() {
     echo "Running Unit Tests ......."
-    sh "mvn clean test -P dev"
+    sh 'mvn clean test -P dev'
 }
 
 def integrationTest() {
