@@ -32,5 +32,5 @@ set -x
 # hgjyfkjfj
 # scp ssh -rv text.txt root@206.81.29.87:/
 cp target/${NAME}-${VERSION}.jar /lsd/
-java -cp /lsd/${NAME}-${VERSION}.jar
-java -jar /lsd/${NAME}-${VERSION}.jar
+#java -cp /lsd/${NAME}-${VERSION}.jar
+/usr/lib/jvm/java-11-openjdk-amd64/bin/java -jar /lsd/${NAME}-${VERSION}.jar
