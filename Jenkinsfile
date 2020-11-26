@@ -35,38 +35,38 @@ pipeline {
                 }
             }
         }
-        // stage('build') {
-        //     // when {
-        //     //     expression {
-        //     //         // Jenkins env file
-        //     //         BRANCH_NAME == 'dev' || CODE_CHANGES == true
-        //     //     }
-        //     // }
-        //     steps {
-        //         script {
-        //             gv.buildProject()
-        //         }
-        //         sh "mvn clean install"
-        //     }
-        // }
-        // stage('unit test') {
-        //     when {
-        //         expression {
-        //             params.executeUnitTests
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             gv.unitTest()
-        //         }
-        //         sh 'mvn clean test -P dev'
-        //     }
-        //     post {
-        //         always {
-        //             junit 'target/surefire-reports/*.xml'
-        //         }
-        //     }
-        // }
+        stage('build') {
+            // when {
+            //     expression {
+            //         // Jenkins env file
+            //         BRANCH_NAME == 'dev' || CODE_CHANGES == true
+            //     }
+            // }
+            steps {
+                script {
+                    gv.buildProject()
+                }
+                sh "mvn clean install"
+            }
+        }
+        stage('unit test') {
+            when {
+                expression {
+                    params.executeUnitTests
+                }
+            }
+            steps {
+                script {
+                    gv.unitTest()
+                }
+                sh 'mvn clean test -P dev'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
         stage('integration test') {
             when {
                 expression {
