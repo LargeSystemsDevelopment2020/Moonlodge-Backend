@@ -1,4 +1,4 @@
-def buildProject() {
+private void buildProject() {
     echo 'building the apllication...'
     // jenkins env files
     echo "Building project NR:${BUILD_DISPLAY_NAME}......."
