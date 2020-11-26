@@ -6,12 +6,10 @@ private void buildProject() {
 
 private void unitTest() {
     echo "Running Unit Tests ......."
-    sh 'mvn clean test -P dev'
 }
 
 def integrationTest() {
     echo "Running Integration Tests ......."
-    sh "mvn clean verify -P integration-test"
 }
 
 def deployProject() {
