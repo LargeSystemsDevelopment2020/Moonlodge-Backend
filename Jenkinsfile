@@ -72,14 +72,6 @@ pipeline {
                 sh 'chmod +x ./deliver.sh'
                 sh './deliver.sh'
             }
-            when {
-                expression {
-                    BRANCH_NAME == "pipeline"
-                }
-            }
-            steps {
-                echo "Hallo from pipeline"
-            }
         }
     }
 
