@@ -25,7 +25,7 @@ pipeline {
                 script {
                     gv.buildProject()
                 }
-                // sh "mvn clean install"
+                sh "mvn clean install"
             }
         }
         stage('unit test') {
@@ -38,7 +38,7 @@ pipeline {
                 script {
                     gv.unitTest()
                 }
-                // sh 'mvn clean test -P dev'
+                sh 'mvn clean test -P dev'
             }
             post {
                 always {
@@ -56,18 +56,31 @@ pipeline {
                 script {
                     gv.integrationTest()
                 }
-                // sh 'mvn clean verify -P integration-test'
+                sh 'mvn clean verify -P integration-test'
             }
         }
-        // stage('deploy') {
-        //     steps {
-        //         script {
-        //             gv.deployProject()
-        //         }
-        //         //    sh 'chmod +x ./deliver.sh'
-        //         //    sh './deliver.sh'
-        //     }
-        // }
+        stage('deploy') {
+            when {
+                expression {
+                    BRANCH_NAME == "main"
+                }
+            }
+            steps {
+                script {
+                    gv.deployProject()
+                }
+                sh 'chmod +x ./deliver.sh'
+                sh './deliver.sh'
+            }
+            when {
+                expression {
+                    BRANCH_NAME == "pipeline"
+                }
+            }
+            steps {
+                echo "Hallo from pipeline"
+            }
+        }
     }
 
 }
