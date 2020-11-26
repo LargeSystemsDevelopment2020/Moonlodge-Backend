@@ -14,8 +14,6 @@ def integrationTest() {
 
 def deployProject() {
     echo "deploying version ${params.VERSION}"
-    sh 'chmod +x ./deliver.sh'
-    sh './deliver.sh'
 }
 
 
