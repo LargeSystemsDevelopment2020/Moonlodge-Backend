@@ -8,6 +8,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("Group E ROCKS (((-:");
+        System.out.println("GROUP E ROCKS (((-:");
     }
 }
