@@ -24,6 +24,19 @@
 
 * * *
 
+- [Moonlodge Schema]()
+
+* * *
+
+- [Moonlodge Insert Values]()
+
+
+* * *
+
+- [Moonlodge Insert EER Diagram]()
+
+* * *
+
 To run **unit tests** by using the command `mvn clean test -P dev`
 
 To run **integration test** by using the command `mvn clean verify -P integration-test`
