@@ -1,12 +1,15 @@
 package dk.lsd;
 
 import dk.lsd.rmi.RMIMethodsImpl;
+import org.apache.log4j.Logger;
+
+
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class Main {
-
+    private final static Logger log =  Logger.getLogger(Main.class.getName());
     public String getString(){
         return "Hello World";
     }
@@ -16,6 +19,9 @@ public class Main {
     public static void main(String[] args) {
         try
         {
+            log.info("INFO LOG");
+            log.error("ERROR LOG");
+
             // Create a server registry at default port 1099
             registry = LocateRegistry.createRegistry(1099);
 

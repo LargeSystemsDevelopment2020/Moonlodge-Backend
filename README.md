@@ -24,6 +24,19 @@
 
 * * *
 
+- [Moonlodge Schema](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/blob/rmi/documents/moonlodge_schema.sql)
+
+* * *
+
+- [Moonlodge Insert Values](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/blob/rmi/documents/insert_values.sql)
+
+
+* * *
+
+- [Moonlodge Insert EER Diagram](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/tree/rmi/documents)
+
+* * *
+
 To run **unit tests** by using the command `mvn clean test -P dev`
 
 To run **integration test** by using the command `mvn clean verify -P integration-test`
