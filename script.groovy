@@ -2,7 +2,7 @@ def buildProject() {
     echo 'building the apllication...'
     // jenkins env files
     echo "Building project NR:${BUILD_DISPLAY_NAME}......."
-    echo "building version ${NEW_VERSION}"
+    //echo "building version ${NEW_VERSION}"
     sh "mvn clean install"
 }
 
@@ -17,10 +17,8 @@ def integrationTest() {
 }
 
 def deployProject() {
-    echo "deploying version ${params.VERSION}"
+    //echo "deploying version ${params.VERSION}"
     sh 'chmod +x ./deliver.sh'
     sh './deliver.sh'
 }
-
-
 return this 
