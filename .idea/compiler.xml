@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="moonlodge_backend" target="11" />
+      <module name="moonlodge_backend" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
