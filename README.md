@@ -24,7 +24,7 @@
 
 * * *
 
-- [Moonlodge Schema](moonlodge_schema.sql)
+- [Moonlodge Schema](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/documents/moonlodge_schema.sql)
 
 * * *
 
