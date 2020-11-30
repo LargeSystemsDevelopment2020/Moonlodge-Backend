@@ -33,7 +33,7 @@
 
 * * *
 
-- [Moonlodge Insert EER Diagram]()
+- [Moonlodge Insert EER Diagram](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/tree/rmi/documents)
 
 * * *
 
