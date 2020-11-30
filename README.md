@@ -28,7 +28,7 @@
 
 * * *
 
-- [Moonlodge Insert Values]()
+- [Moonlodge Insert Values](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/blob/rmi/documents/insert_values.sql)
 
 
 * * *
