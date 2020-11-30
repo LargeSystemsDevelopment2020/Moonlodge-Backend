@@ -201,7 +201,7 @@
         <dependency>
             <groupId>dk.cphbusiness.lsd.groupe.moonloodge</groupId>
             <artifactId>MoonLodgeContract</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
