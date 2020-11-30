@@ -95,8 +95,9 @@ public class DatabaseImpl {
                     int newId = resultSet.getInt(1);
 
                     return newId;
-            }
+                }
 
+            }
         }
 
 
