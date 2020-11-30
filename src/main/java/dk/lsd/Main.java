@@ -21,7 +21,7 @@ public class Main {
         {
             log.info("INFO LOG");
             log.error("ERROR LOG");
-            log.info("DEBUG LOG");
+
             // Create a server registry at default port 1099
             registry = LocateRegistry.createRegistry(1099);
 
