@@ -10,10 +10,10 @@ pipeline {
         
    // }
     parameters {
-        string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
-        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
-        booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
+//         string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
+//         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+//         booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
+//         booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
     }
     // Access build tools for project. Only three tools available: Gradle, Maven and jdk.
     // Is accessable through "global tool configuration" in jenkins. Is used only if locally.
@@ -21,7 +21,7 @@ pipeline {
     // }
     // creating our own env variables
     environment {
-        NEW_VERSION = '1.0.3'
+        //NEW_VERSION = '1.0.3'
         //SERVER_CREDENTIALS = credentials('tomcat')
         // server-credential is the id you gave when creating a jenkins credential
         //SERVER = credentials('tomcat')
