@@ -19,8 +19,7 @@ public class Main {
     public static void main(String[] args) {
         try
         {
-            log.info("INFO LOG");
-            log.error("ERROR LOG");
+            log.info("RMI Registry starting...");
 
             // Create a server registry at default port 1099
             registry = LocateRegistry.createRegistry(1099);
@@ -33,6 +32,8 @@ public class Main {
 
             // Register the engine by the name, which later will be given to the clients
             Naming.rebind("//localhost/" + engineName, remoteMethods);
+
+            log.info("RMI Registry started...");
         }
         catch (Exception e)
         {
