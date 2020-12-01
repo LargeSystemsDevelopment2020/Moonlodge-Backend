@@ -77,29 +77,29 @@ public class DatabaseImpl {
         }
     }
 
-        private int createRoomBooking(Date dateFrom, Date dateTo, int roomId, int bookingId) throws SQLException {
-            var sql = "insert into room_booking(date_of_arrival, date_of_departure, room_id, booking_id) values (?,?,?,?)";
-            try (var con = getConnection();
-                 var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    private int createRoomBooking(Date dateFrom, Date dateTo, int roomId, int bookingId) throws SQLException {
+        var sql = "insert into room_booking(date_of_arrival, date_of_departure, room_id, booking_id) values (?,?,?,?)";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-                java.text.SimpleDateFormat sdf =
-                        new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            java.text.SimpleDateFormat sdf =
+                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-                stmt.setString(1, sdf.format(dateFrom));
-                stmt.setString(2, sdf.format(dateTo));
-                stmt.setInt(3, roomId);
-                stmt.setInt(4, bookingId);
+            stmt.setString(1, sdf.format(dateFrom));
+            stmt.setString(2, sdf.format(dateTo));
+            stmt.setInt(3, roomId);
+            stmt.setInt(4, bookingId);
 
-                try (var resultSet = stmt.getGeneratedKeys()) {
-                    resultSet.next();
-                    int newId = resultSet.getInt(1);
+            try (var resultSet = stmt.getGeneratedKeys()) {
+                resultSet.next();
+                int newId = resultSet.getInt(1);
 
-                    return newId;
+                return newId;
             }
 
         }
 
-
+    }
 
     public List<BookingDTO> findBookings(String passportNumber) throws SQLException {
         var sql = "select * from booking WHERE passportNumber = ?;";
