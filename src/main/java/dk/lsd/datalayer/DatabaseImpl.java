@@ -93,7 +93,7 @@ public class DatabaseImpl {
             try (var resultSet = stmt.getGeneratedKeys()) {
                 resultSet.next();
                 int newId = resultSet.getInt(1);
-                
+
                 return newId;
 
 
