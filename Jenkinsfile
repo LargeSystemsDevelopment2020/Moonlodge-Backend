@@ -7,8 +7,8 @@ pipeline {
     parameters {
         // string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
         // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
-        booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
+        // booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
+        // booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
     }
 
     stages {
@@ -29,11 +29,11 @@ pipeline {
             }
         }
         stage('unit test') {
-            when {
-                expression {
-                    params.executeUnitTests
-                }
-            }
+//             when {
+//                 expression {
+//                     params.executeUnitTests
+//                 }
+//             }
             steps {
                 script {
                     gv.unitTest()
@@ -47,11 +47,11 @@ pipeline {
             }
         }
         stage('integration test') {
-            when {
-                expression {
-                    params.executeIntegrationTests
-                }
-            }
+//             when {
+//                 expression {
+//                     params.executeIntegrationTests
+//                 }
+//             }
             steps {
                 script {
                     gv.integrationTest()
