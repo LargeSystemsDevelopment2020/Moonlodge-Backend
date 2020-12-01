@@ -4,12 +4,12 @@ def gv
 pipeline {
     agent any
 
-    parameters {
+    //parameters {
         // string(name: 'BUILD_REASON', defaultValue: '', description: 'commit message....')
         // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         // booleanParam(name: 'executeUnitTests', defaultValue: true, description: '')
         // booleanParam(name: 'executeIntegrationTests', defaultValue: false, description: '')
-    }
+    //}
 
     stages {
         stage("init") {
