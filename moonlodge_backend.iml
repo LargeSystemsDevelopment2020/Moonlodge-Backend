@@ -11,7 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: dk.cphbusiness.lsd.groupe.moonloodge:MoonLodgeContract:1.0.4" level="project" />
+    <orderEntry type="library" name="Maven: dk.cphbusiness.lsd.groupe.moonloodge:MoonLodgeContract:1.0.5" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.21" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter:5.7.0" level="project" />

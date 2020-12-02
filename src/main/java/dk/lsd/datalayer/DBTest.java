@@ -19,12 +19,13 @@ public class DBTest {
 
         DatabaseImpl db = new DatabaseImpl(CONSTR, USER, PASSWORD);
 
-
+        long date_before = 1217540000000L;
+        System.out.println(date_before);
 
         try {
 
             //Get Vacant hotel rooms.
-            //List<VacantHotelRoomDTO> rooms = db.getHotelRoomList("lyngby", dateFrom, dateTo, 1,1);
+            List<VacantHotelRoomDTO> rooms = db.getHotelRoomList("lyngby", 1217540000000L, 1261870000000L, 1,1);
 
 
 

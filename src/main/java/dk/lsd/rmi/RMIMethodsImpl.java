@@ -8,7 +8,6 @@ import dk.lsd.service.HotelService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
     }
 
     @Override
-    public List<VacantHotelRoomDTO> getHotelRoomList(String city, Date dateFrom, Date dateTo, int numberGuests, int numberRooms) {
+    public List<VacantHotelRoomDTO> getHotelRoomList(String city, long dateFrom, long dateTo, int numberGuests, int numberRooms) {
         try {
             return service.getHotelRoomList(city, dateFrom, dateTo, numberGuests, numberRooms);
         } catch (SQLException ex) {
@@ -30,7 +29,7 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
     }
 
     @Override
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, Date dateFrom, Date dateTo, boolean arrivalIsLate) {
+    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) {
         try {
             return service.createBooking(rooms, passportNumbers, dateFrom, dateTo, arrivalIsLate);
         } catch (SQLException ex) {

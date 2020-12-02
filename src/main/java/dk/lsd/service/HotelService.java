@@ -17,11 +17,11 @@ public class HotelService {
 
     DatabaseImpl datalayer = new DatabaseImpl(DB_URL, DB_USER, DB_PASS);
 
-    public List<VacantHotelRoomDTO> getHotelRoomList(String city, Date dateFrom, Date dateTo, int numberGuests, int numberRooms) throws SQLException {
+    public List<VacantHotelRoomDTO> getHotelRoomList(String city, long dateFrom, long dateTo, int numberGuests, int numberRooms) throws SQLException {
         return datalayer.getHotelRoomList(city, dateFrom, dateTo, numberGuests, numberRooms);
     }
 
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, Date dateFrom, Date dateTo, boolean arrivalIsLate) throws SQLException {
+    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
         return datalayer.createBooking(rooms, passportNumbers, dateFrom, dateTo, arrivalIsLate);
     }
 

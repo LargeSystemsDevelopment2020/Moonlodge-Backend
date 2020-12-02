@@ -28,8 +28,14 @@ public class DatabaseImpl {
     }
 
 
-    public List<VacantHotelRoomDTO> getHotelRoomList(String city, Date dateFrom, Date dateTo, int numberGuests, int numberRooms) throws SQLException {
-        var sql = "select * from room WHERE max_capacity >= ?;";
+    public List<VacantHotelRoomDTO> getHotelRoomList(String city, long dateFrom, long dateTo, int numberGuests, int numberRooms) throws SQLException {
+        var sql = "SELECT room.id as room_id, room.max_capacity as room_capacity, room.price as room_price, room.type as room_type, hotel.id as hotel_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id as headquater_id\n" +
+                "FROM room " +
+                "INNER JOIN hotel ON room.hotel_id = hotel.id " +
+                "WHERE room.max_capacity >= ? AND hotel.city LIKE '%' AND room.id NOT IN ( " +
+                "SELECT room_id  " +
+                "FROM room_booking " +
+                "WHERE date_of_arrival >= 1280613600000 AND date_of_departure <= 1285884000000);";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, numberGuests);
@@ -42,18 +48,20 @@ public class DatabaseImpl {
             while (resultSet.next()) {
 
 
-                //var rooms = resultSet.getString("rooms");
-                //var hotel = resultSet.getObject("hotel", Hotel.class);
+                long roomId = resultSet.getLong("room_id");
+                long roomCapacity = resultSet.getLong("room_capacity");
+
+                String hotelId = resultSet.getString("hotel_id");
+
 
                 System.out.println(resultSet.getString("hotel_id"));
-                //VacantHotelRoomDTO vacantRoom = new VacantHotelRoomDTO(rooms, hotel);
-                //result.add(vacantRoom);
+
             }
             return result;
         }
     }
 
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, Date dateFrom, Date dateTo, boolean arrivalIsLate) throws SQLException {
+    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
         var sql = "insert into booking(arrival_is_late, guest_passport_number) values (?,?)";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
