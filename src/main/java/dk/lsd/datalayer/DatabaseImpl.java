@@ -29,10 +29,10 @@ public class DatabaseImpl {
 
 
     public List<VacantHotelRoomDTO> getHotelRoomList(String city, Date dateFrom, Date dateTo, int numberGuests, int numberRooms) throws SQLException {
-        var sql = "select * from room WHERE city = ?;";
+        var sql = "select * from room WHERE max_capacity >= ?;";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, city);
+            stmt.setInt(1, numberGuests);
 
             var result = new ArrayList<VacantHotelRoomDTO>();
 
@@ -42,11 +42,12 @@ public class DatabaseImpl {
             while (resultSet.next()) {
 
 
-                var rooms = (List<RoomDTO>) resultSet.getArray("rooms");
-                var hotel = resultSet.getObject("hotel", Hotel.class);
+                //var rooms = resultSet.getString("rooms");
+                //var hotel = resultSet.getObject("hotel", Hotel.class);
 
-                VacantHotelRoomDTO vacantRoom = new VacantHotelRoomDTO(rooms, hotel);
-                result.add(vacantRoom);
+                System.out.println(resultSet.getString("hotel_id"));
+                //VacantHotelRoomDTO vacantRoom = new VacantHotelRoomDTO(rooms, hotel);
+                //result.add(vacantRoom);
             }
             return result;
         }
@@ -96,14 +97,20 @@ public class DatabaseImpl {
 
                 return newId;
 
-
             }
         }
 
     }
 
     public List<BookingDTO> findBookings(String passportNumber) throws SQLException {
-        var sql = "select * from booking WHERE passportNumber = ?;";
+        //var sql = "select * from booking WHERE guest_passport_number = ?;";
+        var sql = "select booking.id as booking_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_center_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id\n" +
+                "from room " +
+                "inner join room_booking on room_booking.room_id =room.id " +
+                "inner join booking on booking.id = room_booking.booking_id " +
+                "inner join hotel on hotel.id = room.hotel_id " +
+                "where guest_passport_number = ?;";
+
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
             stmt.setString(1, passportNumber);
@@ -115,12 +122,23 @@ public class DatabaseImpl {
 
             while (resultSet.next()) {
 
-                long bookingID = resultSet.getLong("id");
-                List<RoomDTO> rooms = (List<RoomDTO>) resultSet.getBlob("rooms");
-                String[] passportNumbers = resultSet.getObject("passportNumbers", String[].class);
-                Hotel hotel = resultSet.getObject("hotel", Hotel.class);
+                long bookingID = resultSet.getLong("booking_id");
+                String hotelName = resultSet.getString("hotel_name");
+                String hotelAddress = resultSet.getString("hotel_address");
+                String hotelCity = resultSet.getString("hotel_city");
+                double hotelRaiting = resultSet.getDouble("hotel_raiting");
+                int hotelCenterDistance = resultSet.getInt("hotel_center_distance");
 
-                BookingDTO booking = new BookingDTO(bookingID, rooms, passportNumbers, hotel);
+
+
+                List<RoomDTO> rooms = getRoomsFromBooking(bookingID);
+
+                Hotel hotel = new Hotel( hotelName, hotelAddress, hotelCity, hotelRaiting, hotelCenterDistance, null, null);
+
+
+
+
+                BookingDTO booking = new BookingDTO(bookingID, rooms, new String[] {passportNumber}, hotel);
 
                 result.add(booking);
             }
@@ -129,6 +147,43 @@ public class DatabaseImpl {
         }
     }
 
+
+    public List<RoomDTO> getRoomsFromBooking(long bookingId) throws SQLException {
+
+        var sql = "SELECT room.id as room_id, room.type as room_type, room.price as room_price, room.max_capacity as room_capacity, room_booking.booking_id as room_booking_id, room_booking.date_of_arrival as date_of_arrival, room_booking.date_of_departure as date_of_departure\n" +
+                "FROM room\n" +
+                "INNER JOIN room_booking ON room.id = room_booking.room_id\n" +
+                "WHERE room_booking.booking_id = ?;";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setLong(1, bookingId);
+
+            var result = new ArrayList<RoomDTO>();
+
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+
+                long bookingID = resultSet.getLong("room_booking_id");
+
+                long dateOfArrival = resultSet.getLong("date_of_arrival");
+                long dateOfDeparture = resultSet.getLong("date_of_departure");
+                long roomId = resultSet.getLong("room_id");
+                String type =resultSet.getString("room_type");
+                double price = resultSet.getDouble("room_price");
+                int maxCapacity = resultSet.getInt("room_capacity");
+
+
+                RoomDTO room = new RoomDTO(dateOfArrival, dateOfDeparture, roomId, type, price,maxCapacity);
+
+
+                result.add(room);
+            }
+
+            return result;
+        }
+    }
 
     public boolean cancelBooking(long bookingId) throws SQLException {
         var sql = "delete from bookings where bookingId = ?";
