@@ -1,10 +1,14 @@
 package dk.lsd.datalayer;
 
+import com.sun.management.HotSpotDiagnosticMXBean;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.BookingDTO;
+import dk.cphbusiness.lsd.groupe.moonlogde.dto.HotelDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.RoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.VacantHotelRoomDTO;
+import dk.cphbusiness.lsd.groupe.moonlogde.entitys.HeadQuarter;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Hotel;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
+import dk.cphbusiness.lsd.groupe.moonlogde.entitys.RoomType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,20 +29,27 @@ public class DatabaseImpl {
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(connectionString, username, password);
+
     }
 
 
     public List<VacantHotelRoomDTO> getHotelRoomList(String city, long dateFrom, long dateTo, int numberGuests, int numberRooms) throws SQLException {
-        var sql = "SELECT room.id as room_id, room.max_capacity as room_capacity, room.price as room_price, room.type as room_type, hotel.id as hotel_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id as headquater_id\n" +
+        var sql = "SELECT room.id as room_id, room.max_capacity as room_capacity, room.price as room_price, room.type as room_type, hotel.id as hotel_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id as headquarter_id " +
                 "FROM room " +
                 "INNER JOIN hotel ON room.hotel_id = hotel.id " +
-                "WHERE room.max_capacity >= ? AND hotel.city LIKE '%' AND room.id NOT IN ( " +
+                "WHERE room.max_capacity >= ? AND hotel.city LIKE ? AND room.id NOT IN ( " +
                 "SELECT room_id  " +
                 "FROM room_booking " +
-                "WHERE date_of_arrival >= 1280613600000 AND date_of_departure <= 1285884000000);";
+                "WHERE date_of_arrival >= ? AND date_of_departure <= ?);";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, numberGuests);
+            stmt.setString(2, city);
+            stmt.setLong(3, dateFrom);
+            stmt.setLong(4, dateTo);
+
+
+
 
             var result = new ArrayList<VacantHotelRoomDTO>();
 
@@ -49,12 +60,27 @@ public class DatabaseImpl {
 
 
                 long roomId = resultSet.getLong("room_id");
-                long roomCapacity = resultSet.getLong("room_capacity");
+                int roomCapacity = resultSet.getInt("room_capacity");
+                int roomPrice= resultSet.getInt("room_price");
+                String roomType = resultSet.getString("room_type");
 
+                String hotelName = resultSet.getString("hotel_name");
+                String hotelAddress = resultSet.getString("hotel_address");
+                String hotelCity = resultSet.getString("hotel_city");
+                double hotelDistance = resultSet.getDouble("hotel_distance");
+                double hotelRaiting = resultSet.getInt("hotel_raiting");
                 String hotelId = resultSet.getString("hotel_id");
+                int headquarter = resultSet.getInt("headquarter_id");
 
 
-                System.out.println(resultSet.getString("hotel_id"));
+                HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelAddress, hotelCity, hotelRaiting, hotelDistance, headquarter);
+
+
+
+                VacantHotelRoomDTO vacantRoom = new VacantHotelRoomDTO(roomId, RoomType.valueOf(roomType), roomCapacity, roomPrice, hotel);
+
+
+                result.add(vacantRoom);
 
             }
             return result;
