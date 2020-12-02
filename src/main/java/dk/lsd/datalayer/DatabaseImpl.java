@@ -61,19 +61,16 @@ public class DatabaseImpl {
         }
     }
 
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
+    public BookingDTO createBooking(String[] passportNumbers, boolean arrivalIsLate) throws SQLException {
         var sql = "insert into booking(arrival_is_late, guest_passport_number) values (?,?)";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-
             stmt.setBoolean(1, arrivalIsLate);
             stmt.setString(2, passportNumbers[0]);
 
-
             stmt.executeUpdate();
 
-            // get the newly created id
             try (var resultSet = stmt.getGeneratedKeys()) {
                 resultSet.next();
                 int newId = resultSet.getInt(1);
@@ -86,26 +83,24 @@ public class DatabaseImpl {
         }
     }
 
-    private int createRoomBooking(Date dateFrom, Date dateTo, int roomId, int bookingId) throws SQLException {
+    public void createRoomBooking(long dateFrom, long dateTo, int roomId, int bookingId) throws SQLException {
         var sql = "insert into room_booking(date_of_arrival, date_of_departure, room_id, booking_id) values (?,?,?,?)";
         try (var con = getConnection();
-             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            java.text.SimpleDateFormat sdf =
-                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-            stmt.setString(1, sdf.format(dateFrom));
-            stmt.setString(2, sdf.format(dateTo));
+            stmt.setFloat(1, dateFrom);
+            stmt.setFloat(2, dateTo);
             stmt.setInt(3, roomId);
             stmt.setInt(4, bookingId);
 
-            try (var resultSet = stmt.getGeneratedKeys()) {
-                resultSet.next();
-                int newId = resultSet.getInt(1);
+            stmt.executeUpdate();
 
-                return newId;
-
-            }
+//------------------Room Booking Tabel i SQL har ikke ID kolonne!!!
+//            try (var resultSet = stmt.getGeneratedKeys()) {
+//                resultSet.next();
+//                return resultSet.getInt(1);
+//                //return newId;
+//            }
         }
 
     }
@@ -193,14 +188,23 @@ public class DatabaseImpl {
         }
     }
 
-    public boolean cancelBooking(long bookingId) throws SQLException {
-        var sql = "delete from bookings where bookingId = ?";
+    public boolean cancelRoomBooking(long bookingId) throws SQLException {
+        var sql = "delete from room_booking where booking_id = ?";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
             stmt.setLong(1, bookingId);
 
+            stmt.execute();
+        }
+        return true;
+    }
 
-            // execute the preparedstatement
+    public boolean cancelBooking(long bookingId) throws SQLException {
+        var sql = "delete from booking where id = ?";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setLong(1, bookingId);
+
             stmt.execute();
         }
         return true;
