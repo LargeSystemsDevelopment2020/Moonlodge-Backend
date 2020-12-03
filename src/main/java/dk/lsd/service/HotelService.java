@@ -6,7 +6,6 @@ import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
 import dk.lsd.datalayer.DatabaseImpl;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 public class HotelService {
@@ -26,11 +25,24 @@ public class HotelService {
         for(Room room : rooms){
             datalayer.createRoomBooking(dateFrom, dateTo, room.getId(), bookingDTO.getId());
         }
+        BookingDTO newBookingDTO = datalayer.findBooking(bookingDTO.getId());
+        newBookingDTO.setRooms(datalayer.getRoomsFromBooking(bookingDTO.getId()));
+
+        bookingDTO.setRooms(newBookingDTO.getRooms());
+        bookingDTO.setPassportNumbers(newBookingDTO.getPassportNumbers());
+        bookingDTO.setHotel(newBookingDTO.getHotel());
+
         return bookingDTO;
     }
 
     public List<BookingDTO> findBookings(String passportNumber) throws SQLException {
-        return datalayer.findBookings(passportNumber);
+        List<BookingDTO> bookings = datalayer.findBookings(passportNumber);
+
+        for(BookingDTO bookingDTO : bookings){
+            bookingDTO.setRooms(datalayer.getRoomsFromBooking(bookingDTO.getId()));
+        }
+
+        return bookings;
     }
 
     public boolean cancelBooking(long bookingId) throws SQLException {
