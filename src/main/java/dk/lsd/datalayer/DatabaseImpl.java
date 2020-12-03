@@ -5,10 +5,7 @@ import dk.cphbusiness.lsd.groupe.moonlogde.dto.BookingDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.HotelDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.RoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.VacantHotelRoomDTO;
-import dk.cphbusiness.lsd.groupe.moonlogde.entitys.HeadQuarter;
-import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Hotel;
-import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
-import dk.cphbusiness.lsd.groupe.moonlogde.entitys.RoomType;
+import dk.cphbusiness.lsd.groupe.moonlogde.entitys.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -58,7 +55,6 @@ public class DatabaseImpl {
 
             while (resultSet.next()) {
 
-
                 long roomId = resultSet.getLong("room_id");
                 int roomCapacity = resultSet.getInt("room_capacity");
                 int roomPrice= resultSet.getInt("room_price");
@@ -70,49 +66,74 @@ public class DatabaseImpl {
                 double hotelDistance = resultSet.getDouble("hotel_distance");
                 double hotelRaiting = resultSet.getInt("hotel_raiting");
                 String hotelId = resultSet.getString("hotel_id");
+
                 int headquarter = resultSet.getInt("headquarter_id");
 
 
                 HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelAddress, hotelCity, hotelRaiting, hotelDistance, headquarter);
-
-
-
                 VacantHotelRoomDTO vacantRoom = new VacantHotelRoomDTO(roomId, RoomType.valueOf(roomType), roomCapacity, roomPrice, hotel);
-
 
                 result.add(vacantRoom);
 
             }
             return result;
         }
+
     }
 
     public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
-        var sql = "insert into booking(arrival_is_late, guest_passport_number) values (?,?)";
+        BookingDTO booking = new BookingDTO();
+
+        String passportNr = createGuest(passportNumbers[0]);
+        long bookingId = createSinlgeBooking(passportNr, arrivalIsLate);
+
+        List<RoomDTO> newRooms = new ArrayList<RoomDTO>();
+        for (Room room: rooms) {
+            long roomId = createRoomBooking(dateFrom, dateTo, room.getId(), bookingId);
+            newRooms.add(new RoomDTO(dateFrom, dateTo, roomId, room.getRoomType().toString(), room.getPrice(), room.getMaxCapacity()));
+        }
+
+        booking.setRooms(newRooms);
+
+        return booking;
+    }
+
+    public String createGuest(String passportNumber) throws SQLException{
+        var sql = "insert into guest (passport_number) values (?);";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, passportNumber);
+
+            stmt.executeUpdate();
+
+            return passportNumber;
+
+        }
+    }
+
+    public long createSinlgeBooking(String passportNumbers, boolean arrivalIsLate) throws SQLException {
+        var sql = "insert into booking(arrival_is_late, guest_passport_number) values(?, ?);";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 
             stmt.setBoolean(1, arrivalIsLate);
-            stmt.setString(2, passportNumbers[0]);
-
+            stmt.setString(2, passportNumbers);
 
             stmt.executeUpdate();
 
             // get the newly created id
             try (var resultSet = stmt.getGeneratedKeys()) {
                 resultSet.next();
-                int newId = resultSet.getInt(1);
+                long newId = resultSet.getLong(1);
 
-                BookingDTO booking = new BookingDTO();
-                booking.setId(newId);
-
-                return booking;
+                return newId;
             }
         }
     }
 
-    private int createRoomBooking(Date dateFrom, Date dateTo, int roomId, int bookingId) throws SQLException {
+    private long createRoomBooking(long dateFrom, long dateTo, long roomId, long bookingId) throws SQLException {
         var sql = "insert into room_booking(date_of_arrival, date_of_departure, room_id, booking_id) values (?,?,?,?)";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -122,16 +143,13 @@ public class DatabaseImpl {
 
             stmt.setString(1, sdf.format(dateFrom));
             stmt.setString(2, sdf.format(dateTo));
-            stmt.setInt(3, roomId);
-            stmt.setInt(4, bookingId);
+            stmt.setLong(3, roomId);
+            stmt.setLong(4, bookingId);
 
-            try (var resultSet = stmt.getGeneratedKeys()) {
-                resultSet.next();
-                int newId = resultSet.getInt(1);
 
-                return newId;
 
-            }
+                return roomId;
+
         }
 
     }

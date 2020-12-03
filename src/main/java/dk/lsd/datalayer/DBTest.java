@@ -25,15 +25,20 @@ public class DBTest {
 
             //Get Vacant hotel rooms.
             List<VacantHotelRoomDTO> rooms = db.getHotelRoomList("lyngby", 1217540000000L, 1261870000000L, 1,1);
+            /*
             for (VacantHotelRoomDTO room:rooms) {
                 System.out.println(room.toString());
             }
+             */
 
 
             //Get Bookings from passport number.
             List<BookingDTO> booking = db.findBookings("DK_khgig865845874598");
-            System.out.println(booking.toString());
+            //System.out.println(booking.toString());
 
+            //Create booking
+            String[] arr = {"RLJTEhehhSTSS"};
+            BookingDTO bookingDTO = db.createBooking(null, arr, System.currentTimeMillis(),System.currentTimeMillis(), true);
 
 
 
