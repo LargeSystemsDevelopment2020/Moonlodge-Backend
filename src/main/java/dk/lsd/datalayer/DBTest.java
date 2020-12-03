@@ -4,9 +4,6 @@ import dk.cphbusiness.lsd.groupe.moonlogde.dto.BookingDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.VacantHotelRoomDTO;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 public class DBTest {
@@ -38,7 +35,7 @@ public class DBTest {
 
             //Create booking
             String[] arr = {"RLJTEhehhSTSS"};
-            BookingDTO bookingDTO = db.createBooking(null, arr, System.currentTimeMillis(),System.currentTimeMillis(), true);
+            //BookingDTO bookingDTO = db.createBooking(null, arr, System.currentTimeMillis(),System.currentTimeMillis(), true);
 
 
 

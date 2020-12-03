@@ -5,7 +5,10 @@ import dk.cphbusiness.lsd.groupe.moonlogde.dto.BookingDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.HotelDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.RoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.VacantHotelRoomDTO;
-import dk.cphbusiness.lsd.groupe.moonlogde.entitys.*;
+import dk.cphbusiness.lsd.groupe.moonlogde.entitys.HeadQuarter;
+import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Hotel;
+import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
+import dk.cphbusiness.lsd.groupe.moonlogde.entitys.RoomType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -81,75 +84,47 @@ public class DatabaseImpl {
 
     }
 
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
-        BookingDTO booking = new BookingDTO();
 
-        String passportNr = createGuest(passportNumbers[0]);
-        long bookingId = createSinlgeBooking(passportNr, arrivalIsLate);
-
-        List<RoomDTO> newRooms = new ArrayList<RoomDTO>();
-        for (Room room: rooms) {
-            long roomId = createRoomBooking(dateFrom, dateTo, room.getId(), bookingId);
-            newRooms.add(new RoomDTO(dateFrom, dateTo, roomId, room.getRoomType().toString(), room.getPrice(), room.getMaxCapacity()));
-        }
-
-        booking.setRooms(newRooms);
-
-        return booking;
-    }
-
-    public String createGuest(String passportNumber) throws SQLException{
-        var sql = "insert into guest (passport_number) values (?);";
+    public BookingDTO createBooking(String[] passportNumbers, boolean arrivalIsLate) throws SQLException {
+        var sql = "insert into booking(arrival_is_late, guest_passport_number) values (?,?)";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setString(1, passportNumber);
-
-            stmt.executeUpdate();
-
-            return passportNumber;
-
-        }
-    }
-
-    public long createSinlgeBooking(String passportNumbers, boolean arrivalIsLate) throws SQLException {
-        var sql = "insert into booking(arrival_is_late, guest_passport_number) values(?, ?);";
-        try (var con = getConnection();
-             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
 
             stmt.setBoolean(1, arrivalIsLate);
-            stmt.setString(2, passportNumbers);
+            stmt.setString(2, passportNumbers[0]);
 
             stmt.executeUpdate();
 
-            // get the newly created id
             try (var resultSet = stmt.getGeneratedKeys()) {
                 resultSet.next();
-                long newId = resultSet.getLong(1);
+                int newId = resultSet.getInt(1);
 
-                return newId;
+                BookingDTO booking = new BookingDTO();
+                booking.setId(newId);
+
+                return booking;
             }
         }
     }
 
-    private long createRoomBooking(long dateFrom, long dateTo, long roomId, long bookingId) throws SQLException {
+    public void createRoomBooking(long dateFrom, long dateTo, long roomId, long bookingId) throws SQLException {
         var sql = "insert into room_booking(date_of_arrival, date_of_departure, room_id, booking_id) values (?,?,?,?)";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            java.text.SimpleDateFormat sdf =
-                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-            stmt.setString(1, sdf.format(dateFrom));
-            stmt.setString(2, sdf.format(dateTo));
+            stmt.setFloat(1, dateFrom);
+            stmt.setFloat(2, dateTo);
             stmt.setLong(3, roomId);
             stmt.setLong(4, bookingId);
 
+            stmt.executeUpdate();
 
-
-                return roomId;
-
+//------------------Room Booking Tabel i SQL har ikke ID kolonne!!!
+//            try (var resultSet = stmt.getGeneratedKeys()) {
+//                resultSet.next();
+//                return resultSet.getInt(1);
+//                //return newId;
+//            }
         }
 
     }
@@ -237,14 +212,23 @@ public class DatabaseImpl {
         }
     }
 
-    public boolean cancelBooking(long bookingId) throws SQLException {
-        var sql = "delete from bookings where bookingId = ?";
+    public boolean cancelRoomBooking(long bookingId) throws SQLException {
+        var sql = "delete from room_booking where booking_id = ?";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
             stmt.setLong(1, bookingId);
 
+            stmt.execute();
+        }
+        return true;
+    }
 
-            // execute the preparedstatement
+    public boolean cancelBooking(long bookingId) throws SQLException {
+        var sql = "delete from booking where id = ?";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setLong(1, bookingId);
+
             stmt.execute();
         }
         return true;
