@@ -1,18 +1,14 @@
 package dk.lsd.datalayer;
 
-import com.sun.management.HotSpotDiagnosticMXBean;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.BookingDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.HotelDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.RoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.VacantHotelRoomDTO;
-import dk.cphbusiness.lsd.groupe.moonlogde.entitys.HeadQuarter;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Hotel;
-import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.RoomType;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -32,7 +28,6 @@ public class DatabaseImpl {
 
     }
 
-
     public List<VacantHotelRoomDTO> getHotelRoomList(String city, long dateFrom, long dateTo, int numberGuests, int numberRooms) throws SQLException {
         var sql = "SELECT room.id as room_id, room.max_capacity as room_capacity, room.price as room_price, room.type as room_type, hotel.id as hotel_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id as headquarter_id " +
                 "FROM room " +
@@ -48,17 +43,11 @@ public class DatabaseImpl {
             stmt.setLong(3, dateFrom);
             stmt.setLong(4, dateTo);
 
-
-
-
             var result = new ArrayList<VacantHotelRoomDTO>();
-
 
             ResultSet resultSet = stmt.executeQuery();
 
             while (resultSet.next()) {
-
-
                 long roomId = resultSet.getLong("room_id");
                 int roomCapacity = resultSet.getInt("room_capacity");
                 int roomPrice= resultSet.getInt("room_price");
@@ -72,16 +61,11 @@ public class DatabaseImpl {
                 String hotelId = resultSet.getString("hotel_id");
                 int headquarter = resultSet.getInt("headquarter_id");
 
-
                 HotelDTO hotel = new HotelDTO(hotelId, hotelName, hotelAddress, hotelCity, hotelRaiting, hotelDistance, headquarter);
-
-
 
                 VacantHotelRoomDTO vacantRoom = new VacantHotelRoomDTO(roomId, RoomType.valueOf(roomType), roomCapacity, roomPrice, hotel);
 
-
                 result.add(vacantRoom);
-
             }
             return result;
         }
@@ -120,20 +104,46 @@ public class DatabaseImpl {
             stmt.setLong(4, bookingId);
 
             stmt.executeUpdate();
-
-//------------------Room Booking Tabel i SQL har ikke ID kolonne!!!
-//            try (var resultSet = stmt.getGeneratedKeys()) {
-//                resultSet.next();
-//                return resultSet.getInt(1);
-//                //return newId;
-//            }
         }
 
     }
 
+    public BookingDTO findBooking(long bookingId) throws SQLException {
+        var sql = "select distinct booking.id as booking_id, guest_passport_number, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_center_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id\n" +
+                "from room " +
+                "inner join room_booking on room_booking.room_id =room.id " +
+                "inner join booking on booking.id = room_booking.booking_id " +
+                "inner join hotel on hotel.id = room.hotel_id " +
+                "where booking.id = ?;";
+
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setLong(1, bookingId);
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            BookingDTO booking = null;
+
+            while (resultSet.next()) {
+                long bookingID = resultSet.getLong("booking_id");
+                String passportNumber = resultSet.getString("guest_passport_number");
+                String hotelName = resultSet.getString("hotel_name");
+                String hotelAddress = resultSet.getString("hotel_address");
+                String hotelCity = resultSet.getString("hotel_city");
+                double hotelRaiting = resultSet.getDouble("hotel_raiting");
+                int hotelCenterDistance = resultSet.getInt("hotel_center_distance");
+
+                Hotel hotel = new Hotel( hotelName, hotelAddress, hotelCity, hotelRaiting, hotelCenterDistance, null, null);
+
+                booking = new BookingDTO(bookingID, null, new String[] {passportNumber}, hotel);
+            }
+            return booking;
+
+        }
+    }
+
     public List<BookingDTO> findBookings(String passportNumber) throws SQLException {
-        //var sql = "select * from booking WHERE guest_passport_number = ?;";
-        var sql = "select booking.id as booking_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_center_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id\n" +
+        var sql = "select distinct booking.id as booking_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_center_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id\n" +
                 "from room " +
                 "inner join room_booking on room_booking.room_id =room.id " +
                 "inner join booking on booking.id = room_booking.booking_id " +
@@ -146,11 +156,9 @@ public class DatabaseImpl {
 
             var result = new ArrayList<BookingDTO>();
 
-
             ResultSet resultSet = stmt.executeQuery();
 
             while (resultSet.next()) {
-
                 long bookingID = resultSet.getLong("booking_id");
                 String hotelName = resultSet.getString("hotel_name");
                 String hotelAddress = resultSet.getString("hotel_address");
@@ -158,27 +166,20 @@ public class DatabaseImpl {
                 double hotelRaiting = resultSet.getDouble("hotel_raiting");
                 int hotelCenterDistance = resultSet.getInt("hotel_center_distance");
 
-
-
-                List<RoomDTO> rooms = getRoomsFromBooking(bookingID);
+                //List<RoomDTO> rooms = getRoomsFromBooking(bookingID);
 
                 Hotel hotel = new Hotel( hotelName, hotelAddress, hotelCity, hotelRaiting, hotelCenterDistance, null, null);
 
-
-
-
-                BookingDTO booking = new BookingDTO(bookingID, rooms, new String[] {passportNumber}, hotel);
+                BookingDTO booking = new BookingDTO(bookingID, null, new String[] {passportNumber}, hotel);
+                //BookingDTO booking = new BookingDTO(bookingID, rooms, new String[] {passportNumber}, hotel);
 
                 result.add(booking);
             }
-
             return result;
         }
     }
 
-
     public List<RoomDTO> getRoomsFromBooking(long bookingId) throws SQLException {
-
         var sql = "SELECT room.id as room_id, room.type as room_type, room.price as room_price, room.max_capacity as room_capacity, room_booking.booking_id as room_booking_id, room_booking.date_of_arrival as date_of_arrival, room_booking.date_of_departure as date_of_departure\n" +
                 "FROM room\n" +
                 "INNER JOIN room_booking ON room.id = room_booking.room_id\n" +
@@ -189,11 +190,9 @@ public class DatabaseImpl {
 
             var result = new ArrayList<RoomDTO>();
 
-
             ResultSet resultSet = stmt.executeQuery();
 
             while (resultSet.next()) {
-
                 long bookingID = resultSet.getLong("room_booking_id");
 
                 long dateOfArrival = resultSet.getLong("date_of_arrival");
@@ -203,13 +202,10 @@ public class DatabaseImpl {
                 double price = resultSet.getDouble("room_price");
                 int maxCapacity = resultSet.getInt("room_capacity");
 
-
                 RoomDTO room = new RoomDTO(dateOfArrival, dateOfDeparture, roomId, type, price,maxCapacity);
-
 
                 result.add(room);
             }
-
             return result;
         }
     }
