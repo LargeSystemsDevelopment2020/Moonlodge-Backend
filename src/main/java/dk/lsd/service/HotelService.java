@@ -22,7 +22,11 @@ public class HotelService {
     }
 
     public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
-        return datalayer.createBooking(rooms, passportNumbers, dateFrom, dateTo, arrivalIsLate);
+        BookingDTO bookingDTO = datalayer.createBooking(passportNumbers, arrivalIsLate);
+        for(Room room : rooms){
+            datalayer.createRoomBooking(dateFrom, dateTo, room.getId(), bookingDTO.getId());
+        }
+        return bookingDTO;
     }
 
     public List<BookingDTO> findBookings(String passportNumber) throws SQLException {
@@ -30,6 +34,8 @@ public class HotelService {
     }
 
     public boolean cancelBooking(long bookingId) throws SQLException {
-        return datalayer.cancelBooking(bookingId);
+        datalayer.cancelRoomBooking(bookingId);
+        datalayer.cancelBooking(bookingId);
+        return true;
     }
 }
