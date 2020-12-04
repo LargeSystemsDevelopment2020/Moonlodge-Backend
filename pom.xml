@@ -179,8 +179,16 @@
         <dependency>
             <groupId>dk.cphbusiness.lsd.groupe.moonloodge</groupId>
             <artifactId>MoonLodgeContract</artifactId>
-            <version>1.0.3</version>
+            <version>1.1.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.21</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
