@@ -6,6 +6,13 @@ values
 ('SE'),
 ('FI');
 
+insert into guest (passport_number)
+values
+('DK_khgig865845874598'),
+('SE_gfekyyug897986987'),
+('FI_lkjlk97607607687'),
+('DE_pohhlgdlk87987435984');
+
 insert into hotel (id,name, address, city, distance_to_center, raiting, head_quarter_id)
 values 
 ('000007','Scandic Eremitage', 'Klampenborgvej 230', 'Lyngby', 3.0, 0.7, 1),
@@ -38,12 +45,6 @@ values
 (8,2900,'F','012301'),
 (100,20000,'M','012301');
 
-insert into guest (passport_number)
-values
-('DK_khgig865845874598'),
-('SE_gfekyyug897986987'),
-('FI_lkjlk97607607687'),
-('DE_pohhlgdlk87987435984');
 
 insert into booking(arrival_is_late, guest_passport_number)
 values
@@ -54,10 +55,10 @@ values
 
 insert into room_booking(date_of_arrival, date_of_departure, room_id, booking_id)
 values
-('2008-11-11', '2008-11-12', 22, 1),
-('2008-11-13', '2008-11-14', 28, 2),
-('2008-08-01', '2008-08-12', 33, 2),
-('2008-04-18', '2008-04-22', 37, 3),
-('2009-12-24', '2009-12-27', 31, 4),
-('2009-12-28', '2010-01-01', 23, 4);
+(1226358000000, 1226444400000, 2, 1),
+(1218578400000, 1226617200000, 3, 2),
+(1217541600000, 1218492000000, 4, 2),
+(1208469600000, 1208815200000, 8, 3),
+(1261609200000, 1261868400000, 6, 4),
+(1261954800000, 1262300400000, 7, 4);
 

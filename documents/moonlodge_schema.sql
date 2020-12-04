@@ -76,8 +76,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `moonlodge`.`room_booking` ;
 
 CREATE TABLE IF NOT EXISTS `moonlodge`.`room_booking` (
-  `date_of_arrival` DATETIME NOT NULL,
-  `date_of_departure` DATETIME NOT NULL,
+  `date_of_arrival` FLOAT NOT NULL,
+  `date_of_departure` FLOAT NOT NULL,
   `room_id` INT NOT NULL,
   `booking_id` INT NOT NULL,
   PRIMARY KEY (`room_id`, `booking_id`),
