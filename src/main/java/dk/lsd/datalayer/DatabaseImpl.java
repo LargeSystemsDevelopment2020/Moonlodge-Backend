@@ -5,6 +5,7 @@ import dk.cphbusiness.lsd.groupe.moonlogde.dto.HotelDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.RoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.VacantHotelRoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Hotel;
+import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.RoomType;
 
 import java.sql.*;
@@ -27,6 +28,76 @@ public class DatabaseImpl {
         return DriverManager.getConnection(connectionString, username, password);
 
     }
+
+    public boolean isGuest(String passportNr) throws SQLException {
+        var sql = "select * from guest where passport_number = ?";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, passportNr);
+
+            try (var resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+
+                    return true;
+                }
+                return false;
+            }
+        }
+    }
+
+
+    public String createGuest(String passportNumber) throws SQLException {
+        var sql = "insert into guest (passport_number) values (?);";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, passportNumber);
+
+            stmt.executeUpdate();
+
+            return passportNumber;
+
+        }
+    }
+
+    public long createSinlgeBooking(String passportNumbers, boolean arrivalIsLate) throws SQLException {
+        var sql = "insert into booking(arrival_is_late, guest_passport_number) values(?, ?);";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+
+            stmt.setBoolean(1, arrivalIsLate);
+            stmt.setString(2, passportNumbers);
+
+            stmt.executeUpdate();
+
+            // get the newly created id
+            try (var resultSet = stmt.getGeneratedKeys()) {
+                resultSet.next();
+                long newId = resultSet.getLong(1);
+                return newId;
+            }
+        }
+    }
+
+    public long createRoomBooking(long dateFrom, long dateTo, long roomId, long bookingId) throws SQLException {
+        var sql = "insert into room_booking(date_of_arrival, date_of_departure, room_id, booking_id) values (?,?,?,?)";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setFloat(1, dateFrom);
+            stmt.setFloat(2, dateTo);
+            stmt.setLong(3, roomId);
+            stmt.setLong(4, bookingId);
+
+            stmt.executeUpdate();
+
+            return roomId;
+
+        }
+
+    }
+
 
     public List<VacantHotelRoomDTO> getHotelRoomList(String city, long dateFrom, long dateTo, int numberGuests, int numberRooms) throws SQLException {
         var sql = "SELECT room.id as room_id, room.max_capacity as room_capacity, room.price as room_price, room.type as room_type, hotel.id as hotel_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id as headquarter_id " +
@@ -51,7 +122,7 @@ public class DatabaseImpl {
 
                 long roomId = resultSet.getLong("room_id");
                 int roomCapacity = resultSet.getInt("room_capacity");
-                int roomPrice= resultSet.getInt("room_price");
+                int roomPrice = resultSet.getInt("room_price");
                 String roomType = resultSet.getString("room_type");
 
                 String hotelName = resultSet.getString("hotel_name");
@@ -74,77 +145,6 @@ public class DatabaseImpl {
 
     }
 
-
-    public BookingDTO createBooking(String[] passportNumbers, boolean arrivalIsLate) throws SQLException {
-        var sql = "insert into booking(arrival_is_late, guest_passport_number) values (?,?)";
-        try (var con = getConnection();
-             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setBoolean(1, arrivalIsLate);
-            stmt.setString(2, passportNumbers[0]);
-
-            stmt.executeUpdate();
-
-            try (var resultSet = stmt.getGeneratedKeys()) {
-                resultSet.next();
-                int newId = resultSet.getInt(1);
-
-                BookingDTO booking = new BookingDTO();
-                booking.setId(newId);
-
-                return booking;
-            }
-        }
-    }
-
-    public void createRoomBooking(long dateFrom, long dateTo, long roomId, long bookingId) throws SQLException {
-        var sql = "insert into room_booking(date_of_arrival, date_of_departure, room_id, booking_id) values (?,?,?,?)";
-        try (var con = getConnection();
-             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setFloat(1, dateFrom);
-            stmt.setFloat(2, dateTo);
-            stmt.setLong(3, roomId);
-            stmt.setLong(4, bookingId);
-
-            stmt.executeUpdate();
-        }
-
-    }
-
-    public BookingDTO findBooking(long bookingId) throws SQLException {
-        var sql = "select distinct booking.id as booking_id, guest_passport_number, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_center_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id\n" +
-                "from room " +
-                "inner join room_booking on room_booking.room_id =room.id " +
-                "inner join booking on booking.id = room_booking.booking_id " +
-                "inner join hotel on hotel.id = room.hotel_id " +
-                "where booking.id = ?;";
-
-        try (var con = getConnection();
-             var stmt = con.prepareStatement(sql)) {
-            stmt.setLong(1, bookingId);
-
-            ResultSet resultSet = stmt.executeQuery();
-
-            BookingDTO booking = null;
-
-            while (resultSet.next()) {
-                long bookingID = resultSet.getLong("booking_id");
-                String passportNumber = resultSet.getString("guest_passport_number");
-                String hotelName = resultSet.getString("hotel_name");
-                String hotelAddress = resultSet.getString("hotel_address");
-                String hotelCity = resultSet.getString("hotel_city");
-                double hotelRaiting = resultSet.getDouble("hotel_raiting");
-                int hotelCenterDistance = resultSet.getInt("hotel_center_distance");
-
-                Hotel hotel = new Hotel( hotelName, hotelAddress, hotelCity, hotelRaiting, hotelCenterDistance, null, null);
-
-                booking = new BookingDTO(bookingID, null, new String[] {passportNumber}, hotel);
-            }
-            return booking;
-
-        }
-    }
 
     public List<BookingDTO> findBookings(String passportNumber) throws SQLException {
         var sql = "select distinct booking.id as booking_id, hotel.name as hotel_name, hotel.address as hotel_address, hotel.city as hotel_city, hotel.distance_to_center as hotel_center_distance, hotel.raiting as hotel_raiting, hotel.head_quarter_id\n" +
@@ -170,12 +170,12 @@ public class DatabaseImpl {
                 double hotelRaiting = resultSet.getDouble("hotel_raiting");
                 int hotelCenterDistance = resultSet.getInt("hotel_center_distance");
 
-                //List<RoomDTO> rooms = getRoomsFromBooking(bookingID);
+                List<RoomDTO> rooms = getRoomsFromBooking(bookingID);
 
-                Hotel hotel = new Hotel( hotelName, hotelAddress, hotelCity, hotelRaiting, hotelCenterDistance, null, null);
+                Hotel hotel = new Hotel(hotelName, hotelAddress, hotelCity, hotelRaiting, hotelCenterDistance, null, null);
 
-                BookingDTO booking = new BookingDTO(bookingID, null, new String[] {passportNumber}, hotel);
-                //BookingDTO booking = new BookingDTO(bookingID, rooms, new String[] {passportNumber}, hotel);
+                BookingDTO booking = new BookingDTO(bookingID, rooms, new String[]{passportNumber}, hotel);
+
 
                 result.add(booking);
             }
@@ -202,11 +202,11 @@ public class DatabaseImpl {
                 long dateOfArrival = resultSet.getLong("date_of_arrival");
                 long dateOfDeparture = resultSet.getLong("date_of_departure");
                 long roomId = resultSet.getLong("room_id");
-                String type =resultSet.getString("room_type");
+                String type = resultSet.getString("room_type");
                 double price = resultSet.getDouble("room_price");
                 int maxCapacity = resultSet.getInt("room_capacity");
 
-                RoomDTO room = new RoomDTO(dateOfArrival, dateOfDeparture, roomId, type, price,maxCapacity);
+                RoomDTO room = new RoomDTO(dateOfArrival, dateOfDeparture, roomId, type, price, maxCapacity);
 
                 result.add(room);
             }

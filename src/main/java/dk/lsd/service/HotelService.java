@@ -1,44 +1,54 @@
 package dk.lsd.service;
 
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.BookingDTO;
+import dk.cphbusiness.lsd.groupe.moonlogde.dto.RoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.dto.VacantHotelRoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
 import dk.lsd.datalayer.DatabaseImpl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HotelService {
 
-    private final String DB_URL = "";
-    private final String DB_USER = "";
-    private final String DB_PASS = "";
+    private static final String CONSTR = "jdbc:mysql://localhost/moonlodge?serverTimezone=UTC";
+    private static final String USER = "root";
+    private static final String PASSWORD = "Rasmus123";
 
-    DatabaseImpl datalayer = new DatabaseImpl(DB_URL, DB_USER, DB_PASS);
+    DatabaseImpl datalayer = new DatabaseImpl(CONSTR, USER, PASSWORD);
 
     public List<VacantHotelRoomDTO> getHotelRoomList(String city, long dateFrom, long dateTo, int numberGuests, int numberRooms) throws SQLException {
         return datalayer.getHotelRoomList(city, dateFrom, dateTo, numberGuests, numberRooms);
     }
 
     public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
-        BookingDTO bookingDTO = datalayer.createBooking(passportNumbers, arrivalIsLate);
-        for(Room room : rooms){
-            datalayer.createRoomBooking(dateFrom, dateTo, room.getId(), bookingDTO.getId());
+
+        String passportNumber = passportNumbers[0];
+
+        BookingDTO booking = new BookingDTO();
+
+        if (!datalayer.isGuest(passportNumber)) {
+            passportNumber = datalayer.createGuest(passportNumber);
         }
-        BookingDTO newBookingDTO = datalayer.findBooking(bookingDTO.getId());
-        newBookingDTO.setRooms(datalayer.getRoomsFromBooking(bookingDTO.getId()));
 
-        bookingDTO.setRooms(newBookingDTO.getRooms());
-        bookingDTO.setPassportNumbers(newBookingDTO.getPassportNumbers());
-        bookingDTO.setHotel(newBookingDTO.getHotel());
+        long bookingId = datalayer.createSinlgeBooking(passportNumber, arrivalIsLate);
 
-        return bookingDTO;
+        List<RoomDTO> newRooms = new ArrayList<>();
+        for (Room room : rooms) {
+            long roomId = datalayer.createRoomBooking(dateFrom, dateTo, room.getId(), bookingId);
+            newRooms.add(new RoomDTO(dateFrom, dateTo, roomId, room.getRoomType().toString(), room.getPrice(), room.getMaxCapacity()));
+        }
+
+        booking.setRooms(newRooms);
+
+        return booking;
     }
 
     public List<BookingDTO> findBookings(String passportNumber) throws SQLException {
         List<BookingDTO> bookings = datalayer.findBookings(passportNumber);
 
-        for(BookingDTO bookingDTO : bookings){
+        for (BookingDTO bookingDTO : bookings) {
             bookingDTO.setRooms(datalayer.getRoomsFromBooking(bookingDTO.getId()));
         }
 
