@@ -29,9 +29,9 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
     }
 
     @Override
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) {
+    public BookingDTO createBooking(List<Room> rooms, String passportNumber, long dateFrom, long dateTo, boolean arrivalIsLate) {
         try {
-            return service.createBooking(rooms, passportNumbers, dateFrom, dateTo, arrivalIsLate);
+            return service.createBooking(rooms, passportNumber, dateFrom, dateTo, arrivalIsLate);
         } catch (SQLException ex) {
             //Logging SQL exception
         }

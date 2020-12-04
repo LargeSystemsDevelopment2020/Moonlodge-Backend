@@ -52,7 +52,7 @@ public class DBTest {
 
 
 
-            String[] arr = {"Morten :)"};
+            String passport = "Morten :)))";
            // BookingDTO bookingDTO = db.createBooking(rooms, arr, System.currentTimeMillis(),System.currentTimeMillis(), true);
            // System.out.println(bookingDTO);
 
@@ -60,7 +60,7 @@ public class DBTest {
 
             // MORTEN TEST
             HotelService service = new HotelService();
-            BookingDTO bookingDTO =service.createBooking(rooms, arr, System.currentTimeMillis(),System.currentTimeMillis(), true);
+            BookingDTO bookingDTO =service.createBooking(rooms, passport, System.currentTimeMillis(),System.currentTimeMillis(), true);
             System.out.println(bookingDTO);
 
             //BookingDTO bookingz = service.createBooking(roomsz, arr, 1217540000000L, 1261870000000L, true);

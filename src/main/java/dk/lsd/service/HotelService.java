@@ -22,9 +22,7 @@ public class HotelService {
         return datalayer.getHotelRoomList(city, dateFrom, dateTo, numberGuests, numberRooms);
     }
 
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
-
-        String passportNumber = passportNumbers[0];
+    public BookingDTO createBooking(List<Room> rooms, String passportNumber, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
 
         BookingDTO booking = new BookingDTO();
 
