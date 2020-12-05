@@ -44,11 +44,9 @@ public class DBTest {
             hotel.setId("000007");
             Room room1 = new Room(RoomType.S, 3, 1230, hotel);
             room1.setId(1);
-            Room room2 = new Room(RoomType.S, 3, 1230, hotel);
-            room2.setId(2);
             List<Room> rooms = new ArrayList<Room>();
             rooms.add(room1);
-            rooms.add(room2);
+
 
 
 
