@@ -44,15 +44,13 @@ public class DBTest {
             hotel.setId("000007");
             Room room1 = new Room(RoomType.S, 3, 1230, hotel);
             room1.setId(1);
-            Room room2 = new Room(RoomType.S, 3, 1230, hotel);
-            room2.setId(2);
             List<Room> rooms = new ArrayList<Room>();
             rooms.add(room1);
-            rooms.add(room2);
 
 
 
-            String[] arr = {"Morten :)"};
+
+            String passport = "Morten :)))";
            // BookingDTO bookingDTO = db.createBooking(rooms, arr, System.currentTimeMillis(),System.currentTimeMillis(), true);
            // System.out.println(bookingDTO);
 
@@ -60,7 +58,7 @@ public class DBTest {
 
             // MORTEN TEST
             HotelService service = new HotelService();
-            BookingDTO bookingDTO =service.createBooking(rooms, arr, System.currentTimeMillis(),System.currentTimeMillis(), true);
+            BookingDTO bookingDTO =service.createBooking(rooms, passport, System.currentTimeMillis(),System.currentTimeMillis(), true);
             System.out.println(bookingDTO);
 
             //BookingDTO bookingz = service.createBooking(roomsz, arr, 1217540000000L, 1261870000000L, true);
