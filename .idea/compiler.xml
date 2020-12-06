@@ -6,11 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+<<<<<<< HEAD
         <module name="moonlodge_backend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="moonlodge_backend" target="11" />
+=======
+        <module name="Moonlodge-Backend" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Moonlodge-Backend" target="11" />
+>>>>>>> 530e452c320d3e8a981ffceab4920e06d69b9667
     </bytecodeTargetLevel>
   </component>
 </project>

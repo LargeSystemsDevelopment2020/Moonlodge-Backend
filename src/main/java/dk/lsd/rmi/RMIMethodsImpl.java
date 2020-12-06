@@ -24,16 +24,19 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
             return service.getHotelRoomList(city, dateFrom, dateTo, numberGuests, numberRooms);
         } catch (SQLException ex) {
             //Logging SQL exception
+            System.out.println(ex);
         }
         return null;
     }
 
     @Override
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) {
+    public BookingDTO createBooking(List<Room> rooms, String passportNumber, long dateFrom, long dateTo, boolean arrivalIsLate) {
         try {
-            return service.createBooking(rooms, passportNumbers, dateFrom, dateTo, arrivalIsLate);
+            return service.createBooking(rooms, passportNumber, dateFrom, dateTo, arrivalIsLate);
         } catch (SQLException ex) {
             //Logging SQL exception
+            System.out.println(ex);
+
         }
         return null;
     }
@@ -44,6 +47,8 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
             return service.findBookings(passportNumber);
         } catch (SQLException ex) {
             //Logging SQL exception
+            System.out.println(ex);
+
         }
         return null;
     }
@@ -54,6 +59,7 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
             return service.cancelBooking(bookingId);
         } catch (SQLException ex) {
             //Logging SQL exception
+            System.out.println(ex);
         }
         return false;
     }

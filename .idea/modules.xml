@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/moonlodge_backend.iml" filepath="$PROJECT_DIR$/.idea/moonlodge_backend.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/Moonlodge-Backend.iml" filepath="$PROJECT_DIR$/.idea/Moonlodge-Backend.iml" />
+>>>>>>> 530e452c320d3e8a981ffceab4920e06d69b9667
     </modules>
   </component>
 </project>

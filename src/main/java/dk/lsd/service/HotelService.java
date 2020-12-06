@@ -22,10 +22,7 @@ public class HotelService {
         return datalayer.getHotelRoomList(city, dateFrom, dateTo, numberGuests, numberRooms);
     }
 
-    public BookingDTO createBooking(List<Room> rooms, String[] passportNumbers, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
-
-        String passportNumber = passportNumbers[0];
-
+    public BookingDTO createBooking(List<Room> rooms, String passportNumber, long dateFrom, long dateTo, boolean arrivalIsLate) throws SQLException {
         BookingDTO booking = new BookingDTO();
 
         if (!datalayer.isGuest(passportNumber)) {
@@ -37,10 +34,16 @@ public class HotelService {
         List<RoomDTO> newRooms = new ArrayList<>();
         for (Room room : rooms) {
             long roomId = datalayer.createRoomBooking(dateFrom, dateTo, room.getId(), bookingId);
+
             newRooms.add(new RoomDTO(dateFrom, dateTo, roomId, room.getRoomType().toString(), room.getPrice(), room.getMaxCapacity()));
+            System.out.println(newRooms.toString());
         }
 
         booking.setRooms(newRooms);
+        booking.setPassportNumber(passportNumber);
+
+        System.out.println(booking.toString());
+
 
         return booking;
     }

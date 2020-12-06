@@ -174,7 +174,7 @@ public class DatabaseImpl {
 
                 Hotel hotel = new Hotel(hotelName, hotelAddress, hotelCity, hotelRaiting, hotelCenterDistance, null, null);
 
-                BookingDTO booking = new BookingDTO(bookingID, rooms, new String[]{passportNumber}, hotel);
+                BookingDTO booking = new BookingDTO(bookingID, rooms, passportNumber, hotel);
 
 
                 result.add(booking);
