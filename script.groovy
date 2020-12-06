@@ -25,7 +25,7 @@ def whenBuildFailed() {
     echo "Hallo"
 }
 
-def gv.afterEachBuild() {
+def afterEachBuild() {
     echo "hallo"
 }
 

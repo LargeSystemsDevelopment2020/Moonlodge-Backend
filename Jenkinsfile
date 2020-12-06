@@ -51,24 +51,24 @@ pipeline {
             }
         }
     }
-    // post {
-    //     // will be executed no matter what
-    //     always {
-    //         script {
-    //             gv.afterEachBuild()
-    //         }
-    //     }
-    //     // only relevant if buil fails
-    //     failure {
-    //         script {
-    //         gv.whenBuildFailed()
-    //         }
-    //     }
-    //     // only relevant if build succeded
-    //     success {
-    //         script {
-    //         gv.whenBuildSucceded()
-    //         }
-    //     }
-    // }
+    post {
+        // will be executed no matter what
+        always {
+            script {
+                gv.afterEachBuild()
+            }
+        }
+        // only relevant if buil fails
+        failure {
+            script {
+            gv.whenBuildFailed()
+            }
+        }
+        // only relevant if build succeded
+        success {
+            script {
+            gv.whenBuildSucceded()
+            }
+        }
+    }
 }
