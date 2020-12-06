@@ -1,6 +1,5 @@
-// make the script variable available globally
 def gv
-// to see all env variables in jenkins = http://206.81.29.87:8080/env-vars.html/
+
 pipeline {
     agent any
 
@@ -50,6 +49,20 @@ pipeline {
                 sh 'chmod +x ./deliver.sh'
                 sh './deliver.sh'
             }
+        }
+    }
+    post {
+        // will be executed no matter what
+        always {
+            gv.afterEachBuild()
+        }
+        // only relevant if buil fails
+        failure {
+            gv.whenBuildFailed()
+        }
+        // only relevant if build succeded
+        success {
+            gv.whenBuildSucceded()
         }
     }
 }

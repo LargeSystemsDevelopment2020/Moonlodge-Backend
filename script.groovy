@@ -16,4 +16,17 @@ def integrationTest() {
 def deployProject() {
     echo "deploying version ${params.VERSION}"
 }
+
+def whenBuildSucceded() {
+    echo " Project was deployed successfully: Build ID: ${BUILD_ID}, with Commit:  ${GIT_COMMIT} on Branch: ${GIT_BRANCH}."
+}
+
+def whenBuildFailed() {
+    echo "Hallo"
+}
+
+def gv.afterEachBuild() {
+    echo "hallo"
+}
+
 return this 
