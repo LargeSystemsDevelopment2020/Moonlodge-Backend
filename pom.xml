@@ -209,6 +209,7 @@ implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransfor
         <dependency>
             <groupId>dk.cphbusiness.lsd.groupe.moonloodge</groupId>
             <artifactId>MoonLodgeContract</artifactId>
+            <scope>compile</scope>
             <version>1.1.5</version>
         </dependency>
         <dependency>
