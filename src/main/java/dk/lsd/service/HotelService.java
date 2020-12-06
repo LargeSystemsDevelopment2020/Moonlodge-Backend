@@ -14,8 +14,8 @@ import java.util.List;
 public class HotelService implements Serializable {
 
     private static final String CONSTR = "jdbc:mysql://localhost/moonlodge?serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "Rasmus123";
+    private static final String USER = "mmmrj";
+    private static final String PASSWORD = "mmmrj";
 
     static DatabaseImpl datalayer = new DatabaseImpl(CONSTR, USER, PASSWORD);
 
