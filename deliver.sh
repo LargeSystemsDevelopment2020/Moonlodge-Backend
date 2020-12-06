@@ -33,6 +33,6 @@ set -x
 echo 'Jar File Name: ' ${NAME}-${VERSION}
 cp target/${NAME}-${VERSION}.jar /lsd/
 fuser -k 1099/tcp
-sleep 60
+sleep 30
 #/usr/lib/jvm/java-11-openjdk-amd64/bin/
-java -jar /lsd/${NAME}-${VERSION}.jar
+nohup java -jar /lsd/${NAME}-${VERSION}.jar &
