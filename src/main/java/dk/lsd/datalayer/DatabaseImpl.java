@@ -8,12 +8,13 @@ import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Hotel;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.RoomType;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class DatabaseImpl {
+public class DatabaseImpl implements Serializable {
 
     private String connectionString;
     private String username, password;

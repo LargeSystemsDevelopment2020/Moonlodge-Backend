@@ -22,11 +22,11 @@ def whenBuildSucceded() {
 }
 
 def whenBuildFailed() {
-    echo "Hallo"
+    echo "needs to be implemented"
 }
 
 def afterEachBuild() {
-    echo "hallo"
+    echo "needs to be implemented"
 }
 
 return this 

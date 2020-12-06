@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerInterface {
 
-    HotelService service = new HotelService();
+    private static final HotelService service = new HotelService();
 
     public RMIMethodsImpl() throws RemoteException {
     }

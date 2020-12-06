@@ -6,17 +6,18 @@ import dk.cphbusiness.lsd.groupe.moonlogde.dto.VacantHotelRoomDTO;
 import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
 import dk.lsd.datalayer.DatabaseImpl;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HotelService {
+public class HotelService implements Serializable {
 
     private static final String CONSTR = "jdbc:mysql://localhost/moonlodge?serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "Rasmus123";
 
-    DatabaseImpl datalayer = new DatabaseImpl(CONSTR, USER, PASSWORD);
+    static DatabaseImpl datalayer = new DatabaseImpl(CONSTR, USER, PASSWORD);
 
     public List<VacantHotelRoomDTO> getHotelRoomList(String city, long dateFrom, long dateTo, int numberGuests, int numberRooms) throws SQLException {
         return datalayer.getHotelRoomList(city, dateFrom, dateTo, numberGuests, numberRooms);
