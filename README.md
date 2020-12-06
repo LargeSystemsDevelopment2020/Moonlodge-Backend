@@ -58,4 +58,19 @@ To see the **Java Code Coverage Library JaCoCo** go to the following path `/targ
 * * *
 
 To see the **Pit mutation test** reports go to `/target/pit-reports/index.html`
+
+* * *
+
+## Grafana
+
+To access Grafana go to http://206.81.29.87:3000 and login with the username: admin, and password: guest.
+
+1.	Go to http://206.81.29.87:3000 where Grafana is deployed
+2.	Login with username: admin & password: guest
+3.	On the frontpage look on the starred dashboard, and click “Node Exporter Full”
+4.	When you’re on the dashboard, pick datasource: “Prometheus”, job: “node_exporter”, host: ”Localhost:9100”
+5.	The look at the right corner and pick which time interval you want to look at, we recommend to use 5 min to see most amount of dataflow
+If you don’t have any information, contact the group and we will open the services for you.
+
+
  
