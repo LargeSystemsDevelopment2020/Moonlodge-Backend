@@ -1,5 +1,37 @@
 ### GROUP E
 
+* * * 
+Velkommen til Group E's LSD projekt.
+
+Vi har lavet **Moon lodge projektet**, som er et booking system af hotelværelser.  
+Projektet er lavet med **Java i frontend og backend**, som snakker sammen ved hjælp af **RMI**.  
+
+#### Projektet  
+Projektet er deployet på en droplet og kan tilgås ved hjælp af en [**React frontend**](http://206.81.29.87/) eller et [**Postman projekt**](https://www.getpostman.com/collections/bb1d633ed47153050bab)   
+
+#### Kontrakten
+[**Frontend**](https://github.com/LargeSystemsDevelopment2020/MoonLodge-FrontEnd) og [**backend**](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend) kan sende java klasser over RMI ved at bruge vores [**Kontrakt**](https://github.com/LargeSystemsDevelopment2020/MoonLodge_Contract).  
+Kontrakten er blevet bygget til en .jar fil og lagt på [**Archiva**](http://rasmuslynge.com:8081/#artifact/dk.cphbusiness.lsd.groupe.moonloodge/MoonLodgeContract) på en droplet. (kan muligvis ikke åbnes i chrome grundet SSL_PROTOCOL, men virker bla. i friefox).  
+kontaktens .jar fil bliver hentet ned i front- og backend ved hjælp af pom filen (se i kontraktens repo for et eksempel)
+
+
+#### Pipeline
+Backenden bruger CD ved hjælp af Jenkins. Jenkins får besked fra github, når der er ændringer i main branch og builder, tester og deployer derefter projektet ved hjælp af [jenkinsfilen](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/blob/main/Jenkinsfile), som ligger i backend repoet.  
+
+Kontrakten bliver også lagt på archiva ved hjælp af Jenkins, men dog kun ved hjælp af github webhooks.  
+
+#### Monitorering  
+
+  
+#### Testing  
+Da vi har haft store udfordringer med RMI og byg af jar filer, indenholder vores projekter ikke mange brugbare tests endnu.  
+
+
+
+* * *
+
+
+
 - [Logic Data Model](https://github.com/LargeSystemsDevelopment2020/MoonLodge/blob/master/diagrams/LogicDataModel.md)
 
 * * *
