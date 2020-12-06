@@ -34,4 +34,4 @@ echo 'Jar File Name: ' ${NAME}-${VERSION}
 cp target/${NAME}-${VERSION}.jar /lsd/
 fuser -k 1099/tcp
 #/usr/lib/jvm/java-11-openjdk-amd64/bin/
-nohup java -jar /lsd/${NAME}-${VERSION}.jar &
+java -jar /lsd/${NAME}-${VERSION}.jar &
