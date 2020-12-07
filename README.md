@@ -7,7 +7,7 @@ Vi har lavet **Moon lodge projektet**, som er et booking system af hotelværelse
 Projektet er lavet med **Java i frontend og backend**, som snakker sammen ved hjælp af **RMI**.  
 
 ### Projektet  
-Projektet er deployet på en droplet og kan tilgås ved hjælp af en [**React frontend**](http://206.81.29.87/) eller et [**Postman projekt**](https://www.getpostman.com/collections/bb1d633ed47153050bab)   
+Hele projektet er deployet på en droplet og kan tilgås ved hjælp af en [**React frontend**](http://206.81.29.87/) eller et [**Postman projekt**](https://www.getpostman.com/collections/bb1d633ed47153050bab)   
 
 ### Kontrakten
 [**Frontend**](https://github.com/LargeSystemsDevelopment2020/MoonLodge-FrontEnd) og [**backend**](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend) kan sende java klasser over RMI ved at bruge vores [**Kontrakt**](https://github.com/LargeSystemsDevelopment2020/MoonLodge_Contract).  
@@ -68,7 +68,7 @@ Nedenfor er modeller, diagrammer mm. omhandlende projektet.
 
 * * *
 
-- [Jenkins Server](http://206.81.29.87:8080/login?from=%2F)
+- [Jenkins Server](http://206.81.29.87:8090/)
 
 * * *
 
