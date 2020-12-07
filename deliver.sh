@@ -34,7 +34,7 @@ echo 'Jar File Name: ' ${NAME}-${VERSION}
 cp target/${NAME}-${VERSION}.jar /lsd/
 
 sudo fuser -k 1099/tcp
-sleep 30
+sleep 10
 #/usr/lib/jvm/java-11-openjdk-amd64/bin/
 
 export BUILD_ID=dontKillMe
@@ -43,6 +43,6 @@ export BUILD_ID=dontKillMe
 JENKINS_NODE_COOKIE=dontKillMe
 nohup java -jar /lsd/${NAME}-${VERSION}.jar &
 
-echo test
+echo YEEEEEEEEW
 
 
