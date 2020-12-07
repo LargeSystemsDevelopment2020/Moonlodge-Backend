@@ -117,7 +117,7 @@ To see the **Pit mutation test** reports go to `/target/pit-reports/index.html`
 
 ## Grafana
 
-To access Grafana go to http://206.81.29.87:3000 and login with the username: admin, and password: guest.
+To access Grafana:
 
 1.	Go to http://206.81.29.87:3000 where Grafana is deployed
 2.	Login with username: admin & password: guest
@@ -125,6 +125,23 @@ To access Grafana go to http://206.81.29.87:3000 and login with the username: ad
 4.	When you’re on the dashboard, pick datasource: “Prometheus”, job: “node_exporter”, host: ”Localhost:9100”
 5.	The look at the right corner and pick which time interval you want to look at, we recommend to use 5 min to see most amount of dataflow
 If you don’t have any information, contact the group and we will open the services for you.
+
+If you wanna see the logs in Grafana for both server and running modules in the system. This can be tested by making a booking on the front-end, and watch in the Grafana logs:
+
+1.	Go to http://206.81.29.87:3000 where Grafana is deployed
+2.	Login with username: admin & password: guest
+3.  In the left bar find the icon with a compas, also named Explore. Click it and you will enter the search function for logs.
+    - http://206.81.29.87:3000/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Loki2%22,%7B%7D%5D
+4.  Make sure your Explore is set to Loki2 our log searching engine.
+5.  Next is to find the syslog where all our logs are gathered. Click on: Log labeles -> filename -> /var/log/syslog. This will open the logs of our server & service
+6.  In the top right cornor you can chooce for how long back you want to see our logs, we recommend 1 hours if you want to test the program while watching the logs.
+7.  Next you can click on the blue button and choose and interval the logs should look for new updates
+
+When you've setup the Log Explorere to find the logs you can now see the logs window and start exploring. When you see the log screen you can see the activity of the logs when thinks have been appened. What kind of logs it's INFO, ERROR and so on. If you only want to see 1 kind of log you can click the "info" under the log graf and only those kinda of logs will show.
+
+
+
+
 
 * * *
 
