@@ -1,5 +1,6 @@
 package dk.lsd;
 
+import dk.lsd.datalayer.DatabaseImpl;
 import dk.lsd.rmi.RMIMethodsImpl;
 import org.apache.log4j.Logger;
 
@@ -14,11 +15,11 @@ public class Main {
     }
 
     public static Registry registry;
-
+    static Logger log = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
         try
         {
-            //log.info("RMI Registry starting...");
+            log.info("RMI Registry starting...");
 
             // Create a server registry at default port 1099
             registry = LocateRegistry.createRegistry(1099);
@@ -32,10 +33,11 @@ public class Main {
             // Register the engine by the name, which later will be given to the clients
             Naming.rebind("//localhost/" + engineName, remoteMethods);
 
-            //log.info("RMI Registry started...");
+            log.info("RMI Registry started...");
         }
         catch (Exception e)
         {
+            log.error(e);
             System.err.println("Exception:" + e);
         }
 
