@@ -126,6 +126,7 @@ To access Grafana:
 5.	The look at the right corner and pick which time interval you want to look at, we recommend to use 5 min to see most amount of dataflow
 If you don’t have any information, contact the group and we will open the services for you.
 
+## Log in Grafana
 If you wanna see the logs in Grafana for both server and running modules in the system. This can be tested by making a booking on the front-end, and watch in the Grafana logs:
 
 1.	Go to http://206.81.29.87:3000 where Grafana is deployed
@@ -136,6 +137,8 @@ If you wanna see the logs in Grafana for both server and running modules in the 
 5.  Next is to find the syslog where all our logs are gathered. Click on: Log labeles -> filename -> /var/log/syslog. This will open the logs of our server & service
 6.  In the top right cornor you can chooce for how long back you want to see our logs, we recommend 1 hours if you want to test the program while watching the logs.
 7.  Next you can click on the blue button and choose and interval the logs should look for new updates
+
+If you only want to see want to see logs about the Backend and Frontend, you can go to query next to Log labels and input this for only searching for elements about these : {filename="/var/log/syslog"} |= "lsd"
 
 When you've setup the Log Explorere to find the logs you can now see the logs window and start exploring. When you see the log screen you can see the activity of the logs when thinks have been appened. What kind of logs it's INFO, ERROR and so on. If you only want to see 1 kind of log you can click the "info" under the log graf and only those kinda of logs will show.
 
