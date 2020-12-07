@@ -37,10 +37,11 @@ sudo fuser -k 1099/tcp
 sleep 30
 #/usr/lib/jvm/java-11-openjdk-amd64/bin/
 
-#export BUILD_ID=dontKillMe
+export BUILD_ID=dontKillMe
 #nohup java -jar /lsd/${NAME}-${VERSION}.jar &
 
-JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /lsd/${NAME}-${VERSION}.jar prod >> /var/server-process-prod.log 2>&1 &
+JENKINS_NODE_COOKIE=dontKillMe
+nohup java -jar /lsd/${NAME}-${VERSION}.jar &
 
 echo test
 
