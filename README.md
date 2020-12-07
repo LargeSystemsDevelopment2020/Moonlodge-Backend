@@ -24,10 +24,14 @@ Kontrakten bliver også lagt på archiva ved hjælp af Jenkins, men dog kun ved 
 
 ### Monitorering  
 Vores droplet(projekter) bliver monitoreret med [**Grafana på vores droplet**]( http://206.81.29.87:3000).  
-*bruger:* admin.  
-*password:* guest.  
+bruger: *admin*  
+password: *guest*  
 kig under dashboarded **Node Exporter Full**  
-  
+
+### Logning  
+Vores logging af moonlodge backend foregår også ved hjælp af Grafana. Da vores backend projekt skriver logs til dens droplettens syslog, skal man kigge under denne fil.  
+[**Følg dette link for at se loggen**](http://206.81.29.87:3000/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Loki2%22,%7B%22expr%22:%22%7Bfilename%3D%5C%22%2Fvar%2Flog%2Fsyslog%5C%22%7D%20%7C%3D%20%5C%22dk.lsd%5C%22%22%7D%5D)   
+En mere detaljeret guide af grafana, kan findes i bunden af dokumentet.  
   
 ### Testing  
 Da vi har haft store udfordringer med RMI og byg af jar filer, indeholder vores projekter ikke mange brugbare tests endnu.  
@@ -138,7 +142,7 @@ If you wanna see the logs in Grafana for both server and running modules in the 
 6.  In the top right cornor you can chooce for how long back you want to see our logs, we recommend 1 hours if you want to test the program while watching the logs.
 7.  Next you can click on the blue button and choose and interval the logs should look for new updates
 
-If you only want to see want to see logs about the Backend and Frontend, you can go to query next to Log labels and input this for only searching for elements about these : ` {filename="/var/log/syslog"} |= "lsd"`
+If you only want to see want to see logs about the Backend and Frontend, you can go to query next to Log labels and input this for only searching for elements about these : ` {filename="/var/log/syslog"} |= "dk.lsd"`
 
 When you've setup the Log Explorere to find the logs you can now see the logs window and start exploring. When you see the log screen you can see the activity of the logs when thinks have been appened. What kind of logs it's INFO, ERROR and so on. If you only want to see 1 kind of log you can click the "info" under the log graf and only those kinda of logs will show.
 
