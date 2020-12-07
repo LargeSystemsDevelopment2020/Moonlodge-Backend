@@ -44,7 +44,7 @@ JENKINS_NODE_COOKIE=dontKillMe
 nohup java -jar /lsd/${NAME}-${VERSION}.jar &
 sleep 5 
 
-docker restart unruffled_albattani
+sudo docker restart unruffled_albattani
 echo YEEEEEEEEW
 
 
