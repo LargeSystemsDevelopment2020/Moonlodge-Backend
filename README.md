@@ -21,17 +21,36 @@ Backenden bruger CD ved hjælp af Jenkins. Jenkins får besked fra github, når 
 Kontrakten bliver også lagt på archiva ved hjælp af Jenkins, men dog kun ved hjælp af github webhooks.  
 
 ### Monitorering  
-
-
+Vores droplet(projekter) bliver monitoreret med [**Grafana på vores droplet**]( http://206.81.29.87:3000).  
+*bruger:* admin.  
+*password:* guest.  
+kig under dashboarded **Node Exporter Full**  
+  
   
 ### Testing  
 Da vi har haft store udfordringer med RMI og byg af jar filer, indenholder vores projekter ikke mange brugbare tests endnu.  
 
 
+### SLA Proposal
+[SLA kan blive fundet her](https://github.com/LargeSystemsDevelopment2020/MoonLodge_Contract/blob/master/SLA.md)
+
+
+* * * 
+
+## Kør projektet lokalt  
+*Du skal have MySQL på din lokale maskine*  
+- Find link til sql schema og sql insert values(test data) nedenfor og kør dem i en lokal mySQL server.  
+- git clone moonlodge backend og ret mysql bruger og password. Kør projektet med f.eks. Intellij.  
+- git clone moonlodge frontend og kør det. 
+- Brug vores [postman projekt](https://www.getpostman.com/collections/bb1d633ed47153050bab) til at teste vores endpoints.
+
 
 * * *
 
+# Ressourcer  
+Nedenfor er modeller, diagrammer mm. omhandlende projektet. 
 
+* * *
 
 - [Logic Data Model](https://github.com/LargeSystemsDevelopment2020/MoonLodge/blob/master/diagrams/LogicDataModel.md)
 
@@ -57,11 +76,11 @@ Da vi har haft store udfordringer med RMI og byg af jar filer, indenholder vores
 
 * * *
 
-- [Moonlodge Schema](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/blob/rmi/documents/moonlodge_schema.sql)
+- [Moonlodge Schema](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/blob/main/documents/moonlodge_schema.sql)
 
 * * *
 
-- [Moonlodge Insert Values](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/blob/rmi/documents/insert_values.sql)
+- [Moonlodge Insert Values](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend/blob/main/documents/insert_values.sql)
 
 
 * * *
