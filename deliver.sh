@@ -33,6 +33,7 @@ set -x
 echo 'Jar File Name: ' ${NAME}-${VERSION}
 cp target/${NAME}-${VERSION}.jar /lsd/
 sudo su
+pid=$(lsof -i:3000 -t); kill -TERM $pid || kill -KILL $pid
 
 sudo fuser 1099/tcp
 sleep 10
