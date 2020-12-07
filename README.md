@@ -28,7 +28,7 @@ kig under dashboarded **Node Exporter Full**
   
   
 ### Testing  
-Da vi har haft store udfordringer med RMI og byg af jar filer, indenholder vores projekter ikke mange brugbare tests endnu.  
+Da vi har haft store udfordringer med RMI og byg af jar filer, indeholder vores projekter ikke mange brugbare tests endnu.  
 
 
 ### SLA Proposal
