@@ -37,3 +37,7 @@ sudo fuser -k 1099/tcp
 sleep 30
 #/usr/lib/jvm/java-11-openjdk-amd64/bin/
 nohup java -jar /lsd/${NAME}-${VERSION}.jar &
+
+echo test
+
+
