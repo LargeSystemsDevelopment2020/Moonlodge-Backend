@@ -138,7 +138,7 @@ If you wanna see the logs in Grafana for both server and running modules in the 
 6.  In the top right cornor you can chooce for how long back you want to see our logs, we recommend 1 hours if you want to test the program while watching the logs.
 7.  Next you can click on the blue button and choose and interval the logs should look for new updates
 
-If you only want to see want to see logs about the Backend and Frontend, you can go to query next to Log labels and input this for only searching for elements about these : {filename="/var/log/syslog"} |= "lsd"
+If you only want to see want to see logs about the Backend and Frontend, you can go to query next to Log labels and input this for only searching for elements about these : ` {filename="/var/log/syslog"} |= "lsd"`
 
 When you've setup the Log Explorere to find the logs you can now see the logs window and start exploring. When you see the log screen you can see the activity of the logs when thinks have been appened. What kind of logs it's INFO, ERROR and so on. If you only want to see 1 kind of log you can click the "info" under the log graf and only those kinda of logs will show.
 
