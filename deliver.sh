@@ -36,6 +36,8 @@ cp target/${NAME}-${VERSION}.jar /lsd/
 sudo fuser -k 1099/tcp
 sleep 30
 #/usr/lib/jvm/java-11-openjdk-amd64/bin/
+
+export BUILD_ID=dontKillMe
 nohup java -jar /lsd/${NAME}-${VERSION}.jar &
 
 echo test
