@@ -126,5 +126,5 @@ To access Grafana go to http://206.81.29.87:3000 and login with the username: ad
 5.	The look at the right corner and pick which time interval you want to look at, we recommend to use 5 min to see most amount of dataflow
 If you don’t have any information, contact the group and we will open the services for you.
 
-
- 
+nohup java -jar moonlodge_backend-1.0-SNAPSHOT.jar & 
+nohup /usr/lib/jvm/java-11-openjdk-amd64/bin/java -jar moonlodge-frontend-0.0.1-SNAPSHOT.jar &
