@@ -40,7 +40,7 @@ sleep 30
 #export BUILD_ID=dontKillMe
 #nohup java -jar /lsd/${NAME}-${VERSION}.jar &
 
-sh 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /lsd/${NAME}-${VERSION}.jar prod >> /var/server-process-prod.log 2>&1 &'
+JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /lsd/${NAME}-${VERSION}.jar prod >> /var/server-process-prod.log 2>&1 &
 
 echo test
 
