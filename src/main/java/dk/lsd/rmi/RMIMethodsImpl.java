@@ -6,6 +6,8 @@ import dk.cphbusiness.lsd.groupe.moonlogde.entitys.Room;
 import dk.cphbusiness.lsd.groupe.moonlogde.interfaces.HotelManagerInterface;
 import dk.lsd.service.HotelService;
 
+import org.apache.log4j.Logger;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
@@ -13,6 +15,7 @@ import java.util.List;
 
 public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerInterface {
 
+    static Logger log = Logger.getLogger(RMIMethodsImpl.class.getName());
     private static final HotelService service = new HotelService();
 
     public RMIMethodsImpl() throws RemoteException {
@@ -23,7 +26,7 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
         try {
             return service.getHotelRoomList(city, dateFrom, dateTo, numberGuests, numberRooms);
         } catch (SQLException ex) {
-            //Logging SQL exception
+            log.error(ex);
             System.out.println(ex);
         }
         return null;
@@ -34,7 +37,7 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
         try {
             return service.createBooking(rooms, passportNumber, dateFrom, dateTo, arrivalIsLate);
         } catch (SQLException ex) {
-            //Logging SQL exception
+            log.error(ex);
             System.out.println(ex);
 
         }
@@ -46,7 +49,7 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
         try {
             return service.findBookings(passportNumber);
         } catch (SQLException ex) {
-            //Logging SQL exception
+            log.error(ex);
             System.out.println(ex);
 
         }
@@ -58,7 +61,7 @@ public class RMIMethodsImpl extends UnicastRemoteObject implements HotelManagerI
         try {
             return service.cancelBooking(bookingId);
         } catch (SQLException ex) {
-            //Logging SQL exception
+            log.error(ex);
             System.out.println(ex);
         }
         return false;
