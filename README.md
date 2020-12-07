@@ -9,6 +9,8 @@ Projektet er lavet med **Java i frontend og backend**, som snakker sammen ved hj
 ### Projektet  
 Hele projektet er deployet på en droplet og kan tilgås ved hjælp af en [**React frontend**](http://206.81.29.87/) eller et [**Postman projekt**](https://www.getpostman.com/collections/bb1d633ed47153050bab)   
 
+Du kan lave en booking med en eller flere hotelværelser. Du kan finde dine bookings via dit passport number og du kan slette dine bookings.  
+
 ### Kontrakten
 [**Frontend**](https://github.com/LargeSystemsDevelopment2020/MoonLodge-FrontEnd) og [**backend**](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend) kan sende java klasser over RMI ved at bruge vores [**Kontrakt**](https://github.com/LargeSystemsDevelopment2020/MoonLodge_Contract).  
 Kontrakten er blevet bygget til en .jar fil og lagt på [**Archiva**](http://rasmuslynge.com:8081/#artifact/dk.cphbusiness.lsd.groupe.moonloodge/MoonLodgeContract) på en droplet. (kan muligvis ikke åbnes i chrome grundet SSL_PROTOCOL, men virker bla. i friefox).  
