@@ -13,8 +13,8 @@ Du kan lave en booking med en eller flere hotelværelser. Du kan finde dine book
 
 ### Kontrakten
 [**Frontend**](https://github.com/LargeSystemsDevelopment2020/MoonLodge-FrontEnd) og [**backend**](https://github.com/LargeSystemsDevelopment2020/Moonlodge-Backend) kan sende java klasser over RMI ved at bruge vores [**Kontrakt**](https://github.com/LargeSystemsDevelopment2020/MoonLodge_Contract).  
-Kontrakten er blevet bygget til en .jar fil og lagt på [**Archiva**](http://rasmuslynge.com:8081/#artifact/dk.cphbusiness.lsd.groupe.moonloodge/MoonLodgeContract) på en droplet. (kan muligvis ikke åbnes i chrome grundet SSL_PROTOCOL, men virker bla. i friefox).  
-kontaktens .jar fil bliver hentet ned i front- og backend ved hjælp af pom filen (se i kontraktens repo for et eksempel)
+Kontrakten er blevet bygget til en .jar fil og lagt på [**Archiva**](http://rasmuslynge.com:8081/#artifact/dk.cphbusiness.lsd.groupe.moonloodge/MoonLodgeContract) på en droplet. (kan muligvis ikke åbnes i chrome grundet SSL_PROTOCOL restriktioner, men kan bla. åbnes med firefox).  
+kontakten bliver hentet ned som en dependency i front- og backend ved hjælp af pom filen (se i kontraktens readme eller i front eller backends pom filer for et eksempel)
 
 
 ### Pipeline
