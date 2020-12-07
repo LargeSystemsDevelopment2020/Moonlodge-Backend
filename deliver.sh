@@ -32,7 +32,9 @@ set -x
 # Copying the file from jenkins to droplet
 echo 'Jar File Name: ' ${NAME}-${VERSION}
 cp target/${NAME}-${VERSION}.jar /lsd/
+fuser 1099/tcp
+sleep 10
 fuser -k 1099/tcp
-sleep 30
+sleep 60
 #/usr/lib/jvm/java-11-openjdk-amd64/bin/
 nohup java -jar /lsd/${NAME}-${VERSION}.jar &
