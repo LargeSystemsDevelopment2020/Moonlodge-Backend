@@ -78,7 +78,7 @@ Nedenfor er modeller, diagrammer mm. omhandlende projektet.
 
 * * *
 
-- [Archiva](http://rasmuslynge.com:8088/)
+- [Archiva](http://rasmuslynge.com:8081/#welcome)
 
 * * *
 
