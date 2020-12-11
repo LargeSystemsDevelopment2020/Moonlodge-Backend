@@ -98,12 +98,15 @@ Nedenfor er modeller, diagrammer mm. omhandlende projektet.
 ## Testing
 
 **Unit tests**
+
 To run unit tests by using the command `mvn clean test -P dev`
 
 **Integration test**
+
 To run integration test by using the command `mvn clean verify -P integration-test`
 
 **SonarQube**
+
 SonarQube is a static test suite that is also used in this project but only accessible through a token. 
 
 [SonarQube Setup](https://docs.sonarqube.org/latest/setup/get-started-2-minutes/) or just run docker-image 
@@ -115,11 +118,15 @@ SonarQube is a static test suite that is also used in this project but only acce
  * click "+" on the right top corner and create a "Project key". Key name has to match groupid:artifactid of the project
 
 * * *
+
 **JaCoCo**
+
 To see the **Java Code Coverage Library JaCoCo** go to the following path `/target/site/jacoco/index.html`
 
 * * *
+
 **PiTest**
+
 To see the **Pit mutation test** reports go to `/target/pit-reports/index.html`
 
 * * *
