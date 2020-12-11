@@ -101,9 +101,13 @@ Nedenfor er modeller, diagrammer mm. omhandlende projektet.
 
 To run unit tests by using the command `mvn clean test -P dev`
 
+* * *
+
 **Integration test**
 
 To run integration test by using the command `mvn clean verify -P integration-test`
+
+* * *
 
 **SonarQube**
 
