@@ -43,12 +43,8 @@ public class HotelServiceTest {
 		@Test
 		@DisplayName("The method should throw an SQLException if there is no database connection")
 		public void methodThrowsSqlException() throws SQLException {
-			//service = new HotelService();
 			when(service.getHotelRoomList(anyString(), anyLong(), anyLong(), anyInt(), anyInt())).thenThrow(SQLException.class);
 			assertThrows(SQLException.class, () -> service.getHotelRoomList("test-string", 1606777200000L, 1607122800000L, 5, 2));
 		}
 	}
-
-	
-
 }
