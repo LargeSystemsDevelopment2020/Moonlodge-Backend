@@ -29,7 +29,6 @@ public class DatabaseImpl implements Serializable {
     private Connection getConnection() throws SQLException {
         log.info("Connection: " + connectionString);
         log.info("Username: " + username);
-        log.info("Password: " + password);
         return DriverManager.getConnection(connectionString, username, password);
     }
 
